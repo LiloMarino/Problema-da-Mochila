@@ -2,7 +2,7 @@
 PROJETO = mochila
 
 # Arquivos fonte
-FONTES = arvore.c main.c excel.c
+FONTES = main.c arvore.c
 
 # Pasta de saída
 OUTPUT = output/
@@ -22,7 +22,7 @@ all: $(OUTPUT)$(PROJETO)
 
 # Regra para compilar o projeto
 $(OUTPUT)$(PROJETO): $(OBJETOS)
-	$(CC) $(OBJETOS) -o $@
+	$(CC) $(OBJETOS) -o $@ 
 
 # Regra para criar os arquivos objeto
 $(OUTPUT)%.o: %.c

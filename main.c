@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "arvore.h"
-#include "excel.h"
 
 struct StElemento 
 {
@@ -13,5 +12,5 @@ typedef struct StElemento Elemento;
 int main()
 {
     Elemento Itens[NUMERO_DE_ITEMS];
-
+    
 }

@@ -1,6 +1,8 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "xlsxwriter.h": "c"
+        "xlsxwriter.h": "c",
+        "workbook.h": "c",
+        "worksheet.h": "c"
     },
 }

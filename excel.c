@@ -12,10 +12,10 @@ lxw_workbook* AbrirExcel(const char* filename) {
 
 char* GetCellValue(lxw_workbook* workbook, int planilha, int linha, int coluna){
     /* Obter a planilha pelo índice */
-    lxw_worksheet* worksheet = workbook_get_worksheet_by_index(workbook, sheet_index);
+    lxw_worksheet* worksheet = workbook_get_worksheet_by_index(workbook, planilha);
     
     /* Obter a célula pela linha e coluna */
-    lxw_cell* cell = worksheet->table[row][col];
+    lxw_cell* cell = worksheet->table[linha][coluna];
     
     /* Verificar se a célula existe e se é uma célula de string */
     if (cell != NULL && cell->type == LXW_CELL_STRING) {
