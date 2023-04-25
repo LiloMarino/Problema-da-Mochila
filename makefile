@@ -2,13 +2,14 @@
 PROJETO = mochila
 
 # Arquivos fonte
-FONTES = main.c arvore.c
+FONTES = main.c arvore.c learquivo.c
 
 # Pasta de saída
 OUTPUT = output/
 
 # Cria a pasta de saída se ela não existir
 $(shell mkdir -p $(OUTPUT))
+$(shell cp dados.txt $(OUTPUT))
 
 # Arquivos objeto na pasta de saída
 OBJETOS = $(addprefix $(OUTPUT), $(FONTES:.c=.o))

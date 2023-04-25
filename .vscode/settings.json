@@ -5,4 +5,11 @@
         "workbook.h": "c",
         "worksheet.h": "c"
     },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output",
+            "binaryPath": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output/mochila",
+            "binaryArgs": []
+        }
+    ],
 }
