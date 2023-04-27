@@ -3,12 +3,18 @@
     "files.associations": {
         "xlsxwriter.h": "c",
         "workbook.h": "c",
-        "worksheet.h": "c"
+        "worksheet.h": "c",
+        "arvore.h": "c"
     },
     "makefile.launchConfigurations": [
         {
             "cwd": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output",
             "binaryPath": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output/mochila",
+            "binaryArgs": []
+        },
+        {
+            "cwd": "g:\\Outros computadores\\Meu laptop\\Faculdade\\MatemáticaDiscreta\\Problema da Mochila\\output",
+            "binaryPath": "g:\\Outros computadores\\Meu laptop\\Faculdade\\MatemáticaDiscreta\\Problema da Mochila\\output\\mochila",
             "binaryArgs": []
         }
     ],

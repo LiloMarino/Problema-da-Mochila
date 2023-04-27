@@ -28,7 +28,6 @@ int main()
     int ni = sizeof(Quantidades) / sizeof(int);
     ArqCmds Dados = abreArquivoCmd("dados.txt");
     char *str = NULL;
-    int i;
     /*Atribuição dos Valores*/
     for (int i = 0; leLinha(Dados, &str); i++)
     {
@@ -36,37 +35,11 @@ int main()
     }
     fechaArquivoCmd(Dados);
     /*Máx de cada item*/
-    for (i = 0; i < NUMERO_DE_ITEMS; i++)
+    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
     {
         Itens[i].MaxQntde = CAPACIDADE_DA_MOCHILA / Itens[i].Tamanho;
         Quantidades[i] = 0;
     }
-    /*Verificações baseados na capacidade*/
-    for (int j = 0; j < NUMERO_DE_ITEMS; j++)
-    {
-        for (i = Itens[j].MaxQntde; i >= 0; i--)
-        {
-            int CapacRestante = CAPACIDADE_DA_MOCHILA;
-            /* Variações a partir do item i */
-            if (CapacRestante - Itens[j].Tamanho * i >= 0)
-            {
-                CapacRestante -= Itens[j].Tamanho * i;
-                Quantidades[j] = i;
-            }
-            /*Verificar os próximos*/
-            for (int k = j + 1; k < NUMERO_DE_ITEMS; k++)
-            {
-                for (int qntde = Itens[k].MaxQntde; qntde >= 0; qntde--)
-                {
-                    if (CapacRestante - Itens[k].Tamanho * qntde >= 0)
-                    {
-                        CapacRestante -= Itens[k].Tamanho * qntde;
-                        Quantidades[k] = qntde;
-                        break;
-                    }
-                }
-            }
-            ImprimeVetorInt(Quantidades, ni);
-        }
-    }
+    HeuristicaGulosa();
+    
 }
