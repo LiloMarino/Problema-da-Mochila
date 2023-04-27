@@ -1,6 +1,17 @@
 #include "arvore.h"
+#include <stdio.h>
 
-void HeuristicaGulosa()
+void ImprimeVetorInt(int vetor_int[], int ni)
+{
+    // Imprime o vetor int
+    for (int i = 0; i < ni; i++)
+    {
+        printf("%d ", vetor_int[i]);
+    }
+    printf("\n");
+}
+
+void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
 {
     /*Heuristica Gulosa*/
     int i;
@@ -28,7 +39,7 @@ void HeuristicaGulosa()
                     }
                 }
             }
-            ImprimeVetorInt(Quantidades, ni);
+            ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
         }
     }
 }

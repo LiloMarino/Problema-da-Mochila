@@ -4,7 +4,8 @@
         "xlsxwriter.h": "c",
         "workbook.h": "c",
         "worksheet.h": "c",
-        "arvore.h": "c"
+        "arvore.h": "c",
+        "learquivo.h": "c"
     },
     "makefile.launchConfigurations": [
         {
