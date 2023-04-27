@@ -11,6 +11,7 @@ void ImprimeVetorInt(int vetor_int[], int ni)
     printf("\n");
 }
 
+/// @note Refazer esta função
 void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
 {
     /*Heuristica Gulosa*/
@@ -42,4 +43,25 @@ void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
             ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
         }
     }
+}
+
+void PrimeiroRamo(Elemento Itens[], int Quantidades[])
+{
+    /* Máximo do primeiro item*/
+    int CapacRestante = CAPACIDADE_DA_MOCHILA;
+    CapacRestante -= Itens[0].MaxQntde * Itens[0].Tamanho;
+    Quantidades[0] = Itens[0].MaxQntde;
+    /* Verifica se cabe mais dos próximos itens*/
+    for (int i = 1; i < NUMERO_DE_ITEMS; i++)
+    {
+        int qntde = 1;
+        while (CapacRestante - Itens[i].Tamanho * qntde >= 0)
+        {
+            qntde++;
+        }
+        qntde--;
+        CapacRestante -= qntde * Itens[i].Tamanho;
+        Quantidades[i] = Itens[i].MaxQntde;
+    }
+    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
 }
