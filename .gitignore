@@ -1,1 +1,8 @@
-output/
+output/arvore.o
+output/dados.txt
+output/learquivo.d
+output/learquivo.o
+output/main.d
+output/main.o
+output/mochila
+output/arvore.d

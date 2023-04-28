@@ -1,7 +1,9 @@
 #include "arvore.h"
 #include "learquivo.h"
 #include <stdio.h>
+#include <stdlib.h>
 
+/*Função para imprimir um vetor de inteiros*/
 void ImprimeVetorInt(int vetor_int[], int ni)
 {
     // Imprime o vetor int
@@ -10,6 +12,26 @@ void ImprimeVetorInt(int vetor_int[], int ni)
         printf("%d ", vetor_int[i]);
     }
     printf("\n");
+}
+
+/*Função usada para o qsort ordenar o vetor de Elementos*/
+int ComparaElementos(const void *a, const void *b)
+{
+    const Elemento *elem1 = (const Elemento *)a;
+    const Elemento *elem2 = (const Elemento *)b;
+
+    if (elem1->Fator > elem2->Fator)
+    {
+        return -1;
+    }
+    else if (elem1->Fator < elem2->Fator)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void LerDados(char *fn, Elemento Itens[], int Quantidades[])
@@ -23,18 +45,22 @@ void LerDados(char *fn, Elemento Itens[], int Quantidades[])
     }
     fechaArquivoCmd(Dados);
 
-    /*Máx de cada item*/
+    /*Máx de cada item e Fator Priodade/Tamanho*/
     for (int i = 0; i < NUMERO_DE_ITEMS; i++)
     {
         Itens[i].MaxQntde = CAPACIDADE_DA_MOCHILA / Itens[i].Tamanho;
+        Itens[i].Fator = (double)Itens[i].Prioridade / Itens[i].Tamanho;
         Quantidades[i] = 0;
     }
+
+    /*Ordena os Itens do maior Fator para o menor utilizando a função qsort*/
+    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaElementos);
 }
 
 void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
 {
-    int CapacRestante = PrimeiroRamo(Itens,Quantidades);
-    ProximosRamos(Itens,Quantidades,CapacRestante);
+    int CapacRestante = PrimeiroRamo(Itens, Quantidades);
+    ProximosRamos(Itens, Quantidades, CapacRestante);
 }
 
 int PrimeiroRamo(Elemento Itens[], int Quantidades[])
@@ -69,13 +95,12 @@ void ProximosRamos(Elemento Itens[], int Quantidades[], int CapacRestante)
         {
             Quantidades[i] -= 1;
             CapacRestante += Itens[i].Tamanho;
-            j = i+1;
+            j = i + 1;
             break;
-        }  
+        }
     }
 
-    
-    if(j == -1)
+    if (j == -1)
     {
         /*Não foi encontrado um elemento diferente de 0*/
         return;

@@ -6,6 +6,7 @@
 
 struct StElemento
 {
+    double Fator;
     int Prioridade;
     int Tamanho;
     int MaxQntde;
@@ -17,7 +18,7 @@ typedef struct StElemento Elemento;
  * @brief Lê os dados do arquivo de entrada e inicializa as estruturas de itens e quantidades.
  * 
  * @param fn Nome do arquivo de entrada.
- * @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
+ * @param Itens Vetor de elementos contendo informações de tamanho, prioridade, fator prioridade/tamanho, quantidade máxima de cada item.
  * @param Quantidades Inicializa o Vetor Quantidades.
  * */
 void LerDados(char *fn, Elemento Itens[], int Quantidades[]);
