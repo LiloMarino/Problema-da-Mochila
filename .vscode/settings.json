@@ -5,7 +5,8 @@
         "workbook.h": "c",
         "worksheet.h": "c",
         "arvore.h": "c",
-        "learquivo.h": "c"
+        "learquivo.h": "c",
+        "cmath": "c"
     },
     "makefile.launchConfigurations": [
         {

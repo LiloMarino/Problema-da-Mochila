@@ -1,4 +1,5 @@
 #include "arvore.h"
+#include "learquivo.h"
 #include <stdio.h>
 
 void ImprimeVetorInt(int vetor_int[], int ni)
@@ -11,41 +12,32 @@ void ImprimeVetorInt(int vetor_int[], int ni)
     printf("\n");
 }
 
-/// @note Refazer esta função
-void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
+void LerDados(char *fn, Elemento Itens[], int Quantidades[])
 {
-    /*Heuristica Gulosa*/
-    int i;
-    for (int j = 0; j < NUMERO_DE_ITEMS; j++)
+    ArqCmds Dados = abreArquivoCmd(fn);
+    char *str = NULL;
+    /*Atribuição dos Valores*/
+    for (int i = 0; leLinha(Dados, &str); i++)
     {
-        for (i = Itens[j].MaxQntde; i >= 0; i--)
-        {
-            int CapacRestante = CAPACIDADE_DA_MOCHILA;
-            /* Variações a partir do item i */
-            if (CapacRestante - Itens[j].Tamanho * i >= 0)
-            {
-                CapacRestante -= Itens[j].Tamanho * i;
-                Quantidades[j] = i;
-            }
-            /*Verificar os próximos*/
-            for (int k = j + 1; k < NUMERO_DE_ITEMS; k++)
-            {
-                for (int qntde = Itens[k].MaxQntde; qntde >= 0; qntde--)
-                {
-                    if (CapacRestante - Itens[k].Tamanho * qntde >= 0)
-                    {
-                        CapacRestante -= Itens[k].Tamanho * qntde;
-                        Quantidades[k] = qntde;
-                        break;
-                    }
-                }
-            }
-            ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
-        }
+        sscanf(str, "%d %d", &Itens[i].Tamanho, &Itens[i].Prioridade);
+    }
+    fechaArquivoCmd(Dados);
+
+    /*Máx de cada item*/
+    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
+    {
+        Itens[i].MaxQntde = CAPACIDADE_DA_MOCHILA / Itens[i].Tamanho;
+        Quantidades[i] = 0;
     }
 }
 
-void PrimeiroRamo(Elemento Itens[], int Quantidades[])
+void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
+{
+    int CapacRestante = PrimeiroRamo(Itens,Quantidades);
+    ProximosRamos(Itens,Quantidades,CapacRestante);
+}
+
+int PrimeiroRamo(Elemento Itens[], int Quantidades[])
 {
     /* Máximo do primeiro item*/
     int CapacRestante = CAPACIDADE_DA_MOCHILA;
@@ -61,7 +53,48 @@ void PrimeiroRamo(Elemento Itens[], int Quantidades[])
         }
         qntde--;
         CapacRestante -= qntde * Itens[i].Tamanho;
-        Quantidades[i] = Itens[i].MaxQntde;
+        Quantidades[i] = qntde;
     }
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
+    return CapacRestante;
+}
+
+void ProximosRamos(Elemento Itens[], int Quantidades[], int CapacRestante)
+{
+    /*Achar o primeiro elemento diferente de 0*/
+    int j = -1;
+    for (int i = NUMERO_DE_ITEMS - 1; i >= 0; i--)
+    {
+        if (Quantidades[i] != 0)
+        {
+            Quantidades[i] -= 1;
+            CapacRestante += Itens[i].Tamanho;
+            j = i+1;
+            break;
+        }  
+    }
+
+    
+    if(j == -1)
+    {
+        /*Não foi encontrado um elemento diferente de 0*/
+        return;
+    }
+
+    /*Verifica se cabe mais dos próximos itens*/
+    for (int i = j; i < NUMERO_DE_ITEMS; i++)
+    {
+        int qntde = 1;
+        while (CapacRestante - Itens[i].Tamanho * qntde >= 0)
+        {
+            qntde++;
+        }
+        qntde--;
+        CapacRestante -= qntde * Itens[i].Tamanho;
+        Quantidades[i] = qntde;
+    }
+    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
+
+    /*Ramifica Novamente*/
+    ProximosRamos(Itens, Quantidades, CapacRestante);
 }
