@@ -1,5 +1,5 @@
 #include "arvore.h"
-#include "learquivo.h"
+#include "Bibliotecas/learquivo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

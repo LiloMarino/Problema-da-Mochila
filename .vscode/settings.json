@@ -8,7 +8,8 @@
         "learquivo.h": "c",
         "cmath": "c",
         "stdio.h": "c",
-        "geradores.h": "c"
+        "geradores.h": "c",
+        "efficiency.h": "c"
     },
     "makefile.launchConfigurations": [
         {

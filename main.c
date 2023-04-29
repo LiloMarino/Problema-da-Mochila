@@ -1,7 +1,7 @@
 #if GERAR == 0
 #include <stdio.h>
 #include "arvore.h"
-#include "efficiency.h"
+#include "Bibliotecas/efficiency.h"
 int main()
 {
     Elemento Itens[NUMERO_DE_ITEMS];
@@ -16,7 +16,7 @@ int main()
     finalizarTempo();
 }
 #elif GERAR == 1
-#include "geradores.h"
+#include "Bibliotecas/geradores.h"
 int main()
 {
     
