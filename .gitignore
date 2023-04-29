@@ -1,8 +1,10 @@
+output/arvore.d
 output/arvore.o
 output/dados.txt
+output/efficiency.d
+output/efficiency.o
 output/learquivo.d
 output/learquivo.o
 output/main.d
 output/main.o
 output/mochila
-output/arvore.d
