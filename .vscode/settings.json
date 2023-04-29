@@ -7,7 +7,8 @@
         "arvore.h": "c",
         "learquivo.h": "c",
         "cmath": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "geradores.h": "c"
     },
     "makefile.launchConfigurations": [
         {

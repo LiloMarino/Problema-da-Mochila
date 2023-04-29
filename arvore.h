@@ -1,10 +1,12 @@
 #ifndef ARVORE_H
 #define ARVORE_H
 
+#include <stdbool.h>
+
+/*Configurações*/
 #define CAPACIDADE_DA_MOCHILA 400
 #define NUMERO_DE_ITEMS 4
-
-#include <stdbool.h>
+#define GERAR 0 /* 1 = True, 0 = False*/
 
 struct StElemento
 {
@@ -69,14 +71,12 @@ void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorS
  */
 int CalculaSolucao(const Elemento Itens[], const int Quantidades[]);
 
-
 /**
  * @brief Resolve o problema pelo método Branch Bound.
  * @param Itens Vetor contendo a base de dados dos itens.
  * @param Quantidades Vetor de Quantidades já inicializado.
  */
 void BranchBound(const Elemento Itens[], int Quantidades[]);
-
 
 /**
  * @brief Realiza as ramificações pelo método Branch Bound.
@@ -89,7 +89,6 @@ void BranchBound(const Elemento Itens[], int Quantidades[]);
  */
 void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[]);
 
-
 /**
  * @brief Calcula o Limitante do Ramo Atual para a verificação de poda.
  * @param Itens Vetor contendo a base de dados dos itens.
@@ -98,7 +97,6 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
  * @return Retorna o Limitante.
  */
 int CalculaLimitante(const Elemento Itens[], const int Quantidades[], const int k);
-
 
 /**
  * @brief Verifica se é necessário ou não podar o ramo pelo cálculo do limitante
