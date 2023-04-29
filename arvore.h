@@ -4,6 +4,8 @@
 #define CAPACIDADE_DA_MOCHILA 400
 #define NUMERO_DE_ITEMS 4
 
+#include <stdbool.h>
+
 struct StElemento
 {
     double Fator;
@@ -23,7 +25,7 @@ typedef struct StElemento Elemento;
 void LerDados(char *fn, Elemento Itens[], int Quantidades[]);
 
 /**
- *  @brief Realiza os testes pelo método da Heuristica Gulosa
+ *  @brief Resolve o problema pelo método da Heuristica Gulosa
  *  @note Recomendado apenas para a elaboração de outros métodos por conta da sua ineficiência.
  *  @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
  *  @param Quantidades Vetor de Quantidades já inicializado.
@@ -57,7 +59,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante,
  * @param MelhorSolucao Vetor contendo a melhor solução
  * @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
  */
-void VerificaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao);
+void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao);
 
 /**
  * @brief Calcula a solução do ramo atual e a retorna
@@ -67,6 +69,46 @@ void VerificaSolucao(const Elemento Itens[], const int Quantidades[], int Melhor
  */
 int CalculaSolucao(const Elemento Itens[], const int Quantidades[]);
 
-void BranchBound();
+
+/**
+ * @brief Resolve o problema pelo método Branch Bound.
+ * @param Itens Vetor contendo a base de dados dos itens.
+ * @param Quantidades Vetor de Quantidades já inicializado.
+ */
+void BranchBound(const Elemento Itens[], int Quantidades[]);
+
+
+/**
+ * @brief Realiza as ramificações pelo método Branch Bound.
+ * @param Itens Vetor contendo a base de dados dos itens.
+ * @param Quantidades Vetor de Quantidades do Ramo Anterior.
+ * @param CapacRestante Capacidade Restante do Ramo Anterior.
+ * @param MelhorSolucao Vetor que conterá a sequência da melhor solução.
+ * @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
+ * @param Podado Vetor que indica se o elemento da árvore está podado ou não.
+ */
+void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[]);
+
+
+/**
+ * @brief Calcula o Limitante do Ramo Atual para a verificação de poda.
+ * @param Itens Vetor contendo a base de dados dos itens.
+ * @param Quantidades Vetor de Quantidades do Ramo Atual.
+ * @param k índice do elemento a ser verificado a poda.
+ * @return Retorna o Limitante.
+ */
+int CalculaLimitante(const Elemento Itens[], const int Quantidades[], const int k);
+
+
+/**
+ * @brief Verifica se é necessário ou não podar o ramo pelo cálculo do limitante
+ * @param Itens Vetor contendo a base de dados dos itens.
+ * @param Quantidades Vetor de Quantidades do Ramo Atual.
+ * @param k índice do elemento a ser verificado a poda.
+ * @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
+ * @param Podado Vetor que indica se o elemento da árvore está podado ou não.
+ * @return Retorna verdadeiro se é necessário ramificar e falso caso seja necessário podar.
+ */
+bool VerificaRamificacao(const Elemento Itens[], const int Quantidades[], const int k, const int *MSolucao, bool Podado[]);
 
 #endif

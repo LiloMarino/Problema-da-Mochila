@@ -8,4 +8,6 @@ int main()
     int Quantidades[NUMERO_DE_ITEMS];
     LerDados("dados.txt",Itens,Quantidades);
     HeuristicaGulosa(Itens,Quantidades);
+    printf("METODO BRANCH BOUND:\n");
+    BranchBound(Itens,Quantidades);
 }

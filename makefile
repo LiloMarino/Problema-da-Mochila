@@ -16,14 +16,14 @@ OBJETOS = $(addprefix $(OUTPUT), $(FONTES:.c=.o))
 
 # Compilador e opções de compilação
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic-errors -g 
+CFLAGS = -Wall -Wextra -pedantic-errors -g
 
 # Regra padrão
 all: $(OUTPUT)$(PROJETO)
 
 # Regra para compilar o projeto
 $(OUTPUT)$(PROJETO): $(OBJETOS)
-	$(CC) $(OBJETOS) -o $@ 
+	$(CC) $(OBJETOS) -o $@ -lm
 
 # Regra para criar os arquivos objeto
 $(OUTPUT)%.o: %.c
