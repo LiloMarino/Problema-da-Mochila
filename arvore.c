@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 /*Função para imprimir um vetor de inteiros*/
-void ImprimeVetorInt(int vetor_int[], int ni)
+void ImprimeVetorInt(const int vetor_int[], const int ni)
 {
     // Imprime o vetor int
     for (int i = 0; i < ni; i++)
@@ -57,13 +57,18 @@ void LerDados(char *fn, Elemento Itens[], int Quantidades[])
     qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaElementos);
 }
 
-void HeuristicaGulosa(Elemento Itens[], int Quantidades[])
+void HeuristicaGulosa(const Elemento Itens[], int Quantidades[])
 {
-    int CapacRestante = PrimeiroRamo(Itens, Quantidades);
-    ProximosRamos(Itens, Quantidades, CapacRestante);
+    int MelhorSolucao[NUMERO_DE_ITEMS];
+    int MSolucao = 0;
+    int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao);
+    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao);
+    printf("Solucao:\n");
+    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS);
+    printf("Valor: %d\n", MSolucao);
 }
 
-int PrimeiroRamo(Elemento Itens[], int Quantidades[])
+int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao)
 {
     /* Máximo do primeiro item*/
     int CapacRestante = CAPACIDADE_DA_MOCHILA;
@@ -81,11 +86,14 @@ int PrimeiroRamo(Elemento Itens[], int Quantidades[])
         CapacRestante -= qntde * Itens[i].Tamanho;
         Quantidades[i] = qntde;
     }
+    /*Verifica a primeira Solução*/
+    *MSolucao = 0;
+    VerificaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
     return CapacRestante;
 }
 
-void ProximosRamos(Elemento Itens[], int Quantidades[], int CapacRestante)
+void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao)
 {
     /*Achar o primeiro elemento diferente de 0*/
     int j = -1;
@@ -118,8 +126,42 @@ void ProximosRamos(Elemento Itens[], int Quantidades[], int CapacRestante)
         CapacRestante -= qntde * Itens[i].Tamanho;
         Quantidades[i] = qntde;
     }
+    VerificaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
 
     /*Ramifica Novamente*/
-    ProximosRamos(Itens, Quantidades, CapacRestante);
+    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao);
+}
+
+void VerificaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao)
+{
+    int Solucao = CalculaSolucao(Itens, Quantidades);
+    /*Verifica se a solução atual é a nova melhor solução*/
+    if (Solucao > *MSolucao)
+    {
+        for (int i = 0; i < NUMERO_DE_ITEMS; i++)
+        {
+            MelhorSolucao[i] = Quantidades[i];
+        }
+        *MSolucao = Solucao;
+        return;
+    }
+    else
+    {
+        return;
+    }
+}
+
+int CalculaSolucao(const Elemento Itens[], const int Quantidades[])
+{
+    int Solucao = 0;
+    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
+    {
+        Solucao += Quantidades[i] * Itens[i].Prioridade;
+    }
+    return Solucao;
+}
+
+void BranchBound()
+{
 }
