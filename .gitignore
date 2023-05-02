@@ -1,3 +1,4 @@
+output/
 output/arvore.d
 output/arvore.o
 output/dados.txt
@@ -8,7 +9,5 @@ output/learquivo.o
 output/main.d
 output/main.o
 output/mochila
-output/Bibliotecas/efficiency.d
-output/Bibliotecas/efficiency.o
-output/Bibliotecas/learquivo.d
-output/Bibliotecas/learquivo.o
+
+

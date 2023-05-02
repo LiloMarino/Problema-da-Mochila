@@ -2,6 +2,7 @@
 #define ARVORE_H
 
 #include <stdbool.h>
+#include <stdio.h>
 #include "config.h"
 
 struct StElemento
@@ -38,7 +39,7 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[]);
  *  @param MSolucao Endereço do variável que conterá a melhor solução atual do problema.
  *  @return Retorna a Capacidade Restante do Ramo
  * */
-int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao);
+int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao, FILE *registro);
 
 /**
  *  @brief Faz todas as próximas ramificações depois da primeira
@@ -48,7 +49,7 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
  *  @param MelhorSolucao Vetor que conterá a sequência da melhor solução.
  *  @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
  * */
-void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao);
+void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro);
 
 /**
  * @brief Verifica se a solução atual é melhor que a melhor solução e caso seja melhor substitui em MelhorSolucao
@@ -83,7 +84,7 @@ void BranchBound(const Elemento Itens[], int Quantidades[]);
  * @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
  * @param Podado Vetor que indica se o elemento da árvore está podado ou não.
  */
-void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[]);
+void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro);
 
 /**
  * @brief Calcula o Limitante do Ramo Atual para a verificação de poda.

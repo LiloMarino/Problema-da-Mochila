@@ -20,6 +20,7 @@ int main()
 #include "Bibliotecas/geradores.h"
 int main()
 {
-    
+    /*Gera 20 Elementos com Tamanhos e Prioridades com o intervalo de 1 a 200*/
+    GerarMatrizInt(1,200,20,2,"../dados.txt");
 }
 #endif

@@ -1,18 +1,25 @@
 #include "arvore.h"
 #include "Bibliotecas/learquivo.h"
+#include "Bibliotecas/geradores.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 /*Função para imprimir um vetor de inteiros*/
-void ImprimeVetorInt(const int vetor_int[], const int ni)
+void ImprimeVetorInt(const int vetor_int[], const int ni, FILE *registro)
 {
     // Imprime o vetor int
     for (int i = 0; i < ni; i++)
     {
+#if SHOW_ON_TERMINAL == 1
         printf("%d ", vetor_int[i]);
+#endif
+        fprintf(registro, "%d ", vetor_int[i]);
     }
+#if SHOW_ON_TERMINAL == 1
     printf("\n");
+#endif
+    fprintf(registro, "\n");
 }
 
 /*Função usada para o qsort ordenar o vetor de Elementos*/
@@ -62,14 +69,18 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[])
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
-    int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao);
-    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao);
+    FILE *registro = CriaLog("log");
+    int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
+    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, registro);
     printf("Solucao:\n");
-    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS);
+    fprintf(registro, "Solucao:\n");
+    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
+    fprintf(registro, "Valor: %d\n", MSolucao);
+    fclose(registro);
 }
 
-int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao)
+int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao, FILE *registro)
 {
     /* Máximo do primeiro item*/
     int CapacRestante = CAPACIDADE_DA_MOCHILA;
@@ -90,11 +101,11 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
     /*Verifica a primeira Solução*/
     *MSolucao = 0;
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
-    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
+    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
     return CapacRestante;
 }
 
-void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao)
+void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro)
 {
     /*Acha o primeiro elemento diferente de 0 e subtrai 1 dele*/
     int j = -1;
@@ -128,10 +139,10 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante,
         Quantidades[i] = qntde;
     }
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
-    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
+    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 
     /*Ramifica Novamente*/
-    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao);
+    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, registro);
 }
 
 void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao)
@@ -176,20 +187,21 @@ void BranchBound(const Elemento Itens[], int Quantidades[])
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
-    int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao);
-
+    FILE *registro = CriaLog("log");
+    int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
     /*Inicializa o vetor de poda*/
     bool Podado[NUMERO_DE_ITEMS];
     ReiniciaPoda(Podado);
 
     /*Realiza as ramificações pelo método BranchBound*/
-    RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, Podado);
+    RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, Podado, registro);
     printf("Solucao:\n");
-    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS);
+    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
+    fclose(registro);
 }
 
-void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[])
+void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro)
 {
     /*Acha o primeiro elemento diferente de 0 que não esteja podado*/
     int k = -1;
@@ -228,10 +240,10 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
             Quantidades[i] = qntde;
         }
         AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
-        ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS);
+        ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
     }
     /*Continua...*/
-    RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, Podado);
+    RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, Podado, registro);
 }
 
 int CalculaLimitante(const Elemento Itens[], const int Quantidades[], const int k)
