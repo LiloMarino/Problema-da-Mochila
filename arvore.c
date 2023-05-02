@@ -296,4 +296,3 @@ bool VerificaRamificacao(const Elemento Itens[], const int Quantidades[], const 
         }
     }
 }
-
