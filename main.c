@@ -1,3 +1,4 @@
+#include "config.h"
 #if GERAR == 0
 #include <stdio.h>
 #include "arvore.h"

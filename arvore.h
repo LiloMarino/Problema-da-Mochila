@@ -2,11 +2,7 @@
 #define ARVORE_H
 
 #include <stdbool.h>
-
-/*Configurações*/
-#define CAPACIDADE_DA_MOCHILA 400
-#define NUMERO_DE_ITEMS 4
-#define GERAR 0 /* 1 = True, 0 = False*/
+#include "config.h"
 
 struct StElemento
 {

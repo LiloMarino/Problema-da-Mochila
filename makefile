@@ -2,13 +2,13 @@
 PROJETO = mochila
 
 # Arquivos fonte
-FONTES = main.c arvore.c ../Bibliotecas/learquivo.c ../Bibliotecas/efficiency.c
+FONTES = main.c arvore.c Bibliotecas/learquivo.c Bibliotecas/efficiency.c Bibliotecas/geradores.c
 
 # Pasta de saída
 OUTPUT = output/
 
 # Cria a pasta de saída se ela não existir
-$(shell mkdir -p $(OUTPUT))
+$(shell mkdir -p $(OUTPUT) $(OUTPUT)Bibliotecas)
 $(shell cp dados.txt $(OUTPUT))
 
 # Arquivos objeto na pasta de saída
