@@ -101,7 +101,9 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
     /*Verifica a primeira Solução*/
     *MSolucao = 0;
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
+#if SHOW_ONLY_ANSWER != 1
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
+#endif
     return CapacRestante;
 }
 
@@ -139,8 +141,9 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante,
         Quantidades[i] = qntde;
     }
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
+#if SHOW_ONLY_ANSWER != 1
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
-
+#endif
     /*Ramifica Novamente*/
     ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, registro);
 }
@@ -156,11 +159,6 @@ void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorS
             MelhorSolucao[i] = Quantidades[i];
         }
         *MSolucao = Solucao;
-        return;
-    }
-    else
-    {
-        return;
     }
 }
 
@@ -196,8 +194,10 @@ void BranchBound(const Elemento Itens[], int Quantidades[])
     /*Realiza as ramificações pelo método BranchBound*/
     RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, Podado, registro);
     printf("Solucao:\n");
+    fprintf(registro, "Solucao:\n");
     ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
+    fprintf(registro, "Valor: %d\n", MSolucao);
     fclose(registro);
 }
 
@@ -240,7 +240,9 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
             Quantidades[i] = qntde;
         }
         AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
+#if SHOW_ONLY_ANSWER != 1
         ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
+#endif
     }
     /*Continua...*/
     RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, Podado, registro);

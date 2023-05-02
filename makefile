@@ -16,7 +16,7 @@ OBJETOS = $(addprefix $(OUTPUT), $(FONTES:.c=.o))
 
 # Compilador e opções de compilação
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic-errors -g -fstack-protector-all
+CFLAGS = -Wall -Wextra -pedantic-errors -g 
 
 # Regra padrão
 all: $(OUTPUT)$(PROJETO)
@@ -38,6 +38,6 @@ clean:
 
 # Regra para executar o programa com o Valgrind
 run:
-	valgrind --leak-check=full $(OUTPUT)$(PROJETO)
+	valgrind --leak-check=full --show-leak-kinds=all $(OUTPUT)$(PROJETO)
 
 .PHONY: all clean
