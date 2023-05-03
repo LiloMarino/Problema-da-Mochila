@@ -25,6 +25,6 @@ int main()
 int main()
 {
     /*Gera 20 Elementos com Tamanhos e Prioridades com o intervalo de 1 a 200*/
-    GerarMatrizInt(1, 200, 10, 2, "../dados.txt");
+    GerarMatrizInt(1, CAPACIDADE_DA_MOCHILA, NUMERO_DE_ITEMS, 2, "../dados.txt");
 }
 #endif

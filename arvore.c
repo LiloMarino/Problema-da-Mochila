@@ -65,13 +65,28 @@ void LerDados(char *fn, Elemento Itens[], int Quantidades[])
     qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaElementos);
 }
 
+bool AntiStackOverflow(const int Quantidades[])
+{
+    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
+    {
+        if (Quantidades[i] != 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void HeuristicaGulosa(const Elemento Itens[], int Quantidades[])
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
     FILE *registro = CriaLog("log");
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
-    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, registro);
+    while (AntiStackOverflow(Quantidades))
+    {
+        ProximosRamos(Itens, Quantidades, &CapacRestante, MelhorSolucao, &MSolucao, registro);
+    }
     printf("Solucao:\n");
     fprintf(registro, "Solucao:\n");
     ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
@@ -107,7 +122,7 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
     return CapacRestante;
 }
 
-void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro)
+void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro)
 {
     /*Acha o primeiro elemento diferente de 0 e subtrai 1 dele*/
     int j = -1;
@@ -116,7 +131,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante,
         if (Quantidades[i] != 0)
         {
             Quantidades[i] -= 1;
-            CapacRestante += Itens[i].Tamanho;
+            *CapacRestante += Itens[i].Tamanho;
             j = i + 1;
             break;
         }
@@ -132,12 +147,12 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante,
     for (int i = j; i < NUMERO_DE_ITEMS; i++)
     {
         int qntde = 1;
-        while (CapacRestante - Itens[i].Tamanho * qntde >= 0)
+        while (*CapacRestante - Itens[i].Tamanho * qntde >= 0)
         {
             qntde++;
         }
         qntde--;
-        CapacRestante -= qntde * Itens[i].Tamanho;
+        *CapacRestante -= qntde * Itens[i].Tamanho;
         Quantidades[i] = qntde;
     }
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
@@ -145,7 +160,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante,
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
     /*Ramifica Novamente*/
-    ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, registro);
+    //ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, registro);
 }
 
 void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao)

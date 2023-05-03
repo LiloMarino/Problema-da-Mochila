@@ -37,6 +37,7 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[]);
  *  @param Quantidades Vetor de Quantidades já inicializado.
  *  @param MelhorSolucao Vetor que conterá a sequência da melhor solução.
  *  @param MSolucao Endereço do variável que conterá a melhor solução atual do problema.
+ *  @param registro Ponteiro para o arquivo de log
  *  @return Retorna a Capacidade Restante do Ramo
  * */
 int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao, FILE *registro);
@@ -48,8 +49,9 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
  *  @param CapacRestante Capacidade Restante do Ramo Anterior.
  *  @param MelhorSolucao Vetor que conterá a sequência da melhor solução.
  *  @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
+ *  @param registro Ponteiro para o arquivo de log
  * */
-void ProximosRamos(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro);
+void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro);
 
 /**
  * @brief Verifica se a solução atual é melhor que a melhor solução e caso seja melhor substitui em MelhorSolucao
@@ -83,6 +85,7 @@ void BranchBound(const Elemento Itens[], int Quantidades[]);
  * @param MelhorSolucao Vetor que conterá a sequência da melhor solução.
  * @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
  * @param Podado Vetor que indica se o elemento da árvore está podado ou não.
+ * @param registro Ponteiro para o arquivo de log
  */
 void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro);
 
