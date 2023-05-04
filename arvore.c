@@ -65,12 +65,9 @@ void LerDados(char *fn, Elemento Itens[], int Quantidades[])
     qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaElementos);
 }
 
-bool AntiStackOverflow(const int Quantidades[])
-{
-    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
-    {
-        if (Quantidades[i] != 0)
-        {
+bool AntiStackOverflow(const int Quantidades[]) {
+    for (int i = 0; i < NUMERO_DE_ITEMS; i++) {
+        if (Quantidades[i]) {
             return true;
         }
     }
@@ -81,7 +78,7 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[])
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
-    FILE *registro = CriaLog("log");
+    FILE *registro = CriaLog("HeuristicaGulosa");
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
     while (AntiStackOverflow(Quantidades))
     {
@@ -159,8 +156,6 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
 #if SHOW_ONLY_ANSWER != 1
     ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
-    /*Ramifica Novamente*/
-    //ProximosRamos(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, registro);
 }
 
 void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao)
@@ -200,7 +195,7 @@ void BranchBound(const Elemento Itens[], int Quantidades[])
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
-    FILE *registro = CriaLog("log");
+    FILE *registro = CriaLog("BranchBound");
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
     /*Inicializa o vetor de poda*/
     bool Podado[NUMERO_DE_ITEMS];

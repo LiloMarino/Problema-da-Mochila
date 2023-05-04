@@ -9,6 +9,7 @@ int main()
     int Quantidades[NUMERO_DE_ITEMS];
     LerDados("dados.txt", Itens, Quantidades);
 #if METHOD_USE != 2
+    printf("METODO HEURISTICA GULOSA:\n");
     iniciarTempo();
     HeuristicaGulosa(Itens, Quantidades);
     finalizarTempo();
@@ -25,6 +26,6 @@ int main()
 int main()
 {
     /*Gera 20 Elementos com Tamanhos e Prioridades com o intervalo de 1 a 200*/
-    GerarMatrizInt(1, CAPACIDADE_DA_MOCHILA, NUMERO_DE_ITEMS, 2, "../dados.txt");
+    GerarMatrizInt(CAPACIDADE_DA_MOCHILA/4, CAPACIDADE_DA_MOCHILA, NUMERO_DE_ITEMS, 2, "../dados.txt");
 }
 #endif
