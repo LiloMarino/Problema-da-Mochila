@@ -1,6 +1,5 @@
 #include "arvore.h"
 #include "Bibliotecas/learquivo.h"
-#include "Bibliotecas/geradores.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -42,7 +41,7 @@ int ComparaElementos(const void *a, const void *b)
     }
 }
 
-void LerDados(char *fn, Elemento Itens[], int Quantidades[])
+void LerDados(char *fn, Elemento Itens[])
 {
     ArqCmds Dados = abreArquivoCmd(fn);
     char *str = NULL;
@@ -58,27 +57,28 @@ void LerDados(char *fn, Elemento Itens[], int Quantidades[])
     {
         Itens[i].MaxQntde = CAPACIDADE_DA_MOCHILA / Itens[i].Tamanho;
         Itens[i].Fator = (double)Itens[i].Prioridade / Itens[i].Tamanho;
-        Quantidades[i] = 0;
     }
 
     /*Ordena os Itens do maior Fator para o menor utilizando a função qsort*/
     qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaElementos);
 }
 
-bool AntiStackOverflow(const int Quantidades[]) {
-    for (int i = 0; i < NUMERO_DE_ITEMS; i++) {
-        if (Quantidades[i]) {
+bool AntiStackOverflow(const int Quantidades[])
+{
+    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
+    {
+        if (Quantidades[i])
+        {
             return true;
         }
     }
     return false;
 }
 
-void HeuristicaGulosa(const Elemento Itens[], int Quantidades[])
+void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro)
 {
-    int MelhorSolucao[NUMERO_DE_ITEMS];
+    int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
     int MSolucao = 0;
-    FILE *registro = CriaLog("HeuristicaGulosa");
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
     while (AntiStackOverflow(Quantidades))
     {
@@ -89,7 +89,6 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[])
     ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
     fprintf(registro, "Valor: %d\n", MSolucao);
-    fclose(registro);
 }
 
 int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[], int *MSolucao, FILE *registro)
@@ -125,7 +124,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
     int j = -1;
     for (int i = NUMERO_DE_ITEMS - 1; i >= 0; i--)
     {
-        if (Quantidades[i] != 0)
+        if (Quantidades[i] > 0)
         {
             Quantidades[i] -= 1;
             *CapacRestante += Itens[i].Tamanho;
@@ -143,14 +142,16 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
     /*Verifica se cabe mais dos próximos itens*/
     for (int i = j; i < NUMERO_DE_ITEMS; i++)
     {
-        int qntde = 1;
-        while (*CapacRestante - Itens[i].Tamanho * qntde >= 0)
+        int qntde = (*CapacRestante) / Itens[i].Tamanho;
+        if (qntde > 0)
         {
-            qntde++;
+            Quantidades[i] = qntde;
+            *CapacRestante -= qntde * Itens[i].Tamanho;
         }
-        qntde--;
-        *CapacRestante -= qntde * Itens[i].Tamanho;
-        Quantidades[i] = qntde;
+        else
+        {
+            Quantidades[i] = 0;
+        }
     }
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
 #if SHOW_ONLY_ANSWER != 1
@@ -191,11 +192,10 @@ void ReiniciaPoda(bool Podado[])
     }
 }
 
-void BranchBound(const Elemento Itens[], int Quantidades[])
+void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro)
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
-    FILE *registro = CriaLog("BranchBound");
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
     /*Inicializa o vetor de poda*/
     bool Podado[NUMERO_DE_ITEMS];
@@ -208,7 +208,6 @@ void BranchBound(const Elemento Itens[], int Quantidades[])
     ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
     fprintf(registro, "Valor: %d\n", MSolucao);
-    fclose(registro);
 }
 
 void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro)

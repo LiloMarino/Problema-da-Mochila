@@ -19,9 +19,8 @@ typedef struct StElemento Elemento;
  * @brief Lê os dados do arquivo de entrada e inicializa as estruturas de itens e quantidades.
  * @param fn Nome do arquivo de entrada.
  * @param Itens Vetor de elementos contendo informações de tamanho, prioridade, fator prioridade/tamanho, quantidade máxima de cada item.
- * @param Quantidades Inicializa o Vetor Quantidades.
  * */
-void LerDados(char *fn, Elemento Itens[], int Quantidades[]);
+void LerDados(char *fn, Elemento Itens[]);
 
 /**
  *  @brief Resolve o problema pelo método da Heuristica Gulosa
@@ -29,7 +28,7 @@ void LerDados(char *fn, Elemento Itens[], int Quantidades[]);
  *  @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
  *  @param Quantidades Vetor de Quantidades já inicializado.
  * */
-void HeuristicaGulosa(const Elemento Itens[], int Quantidades[]);
+void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro);
 
 /**
  *  @brief Faz a primeira ramificação da árvore
@@ -75,7 +74,7 @@ int CalculaSolucao(const Elemento Itens[], const int Quantidades[]);
  * @param Itens Vetor contendo a base de dados dos itens.
  * @param Quantidades Vetor de Quantidades já inicializado.
  */
-void BranchBound(const Elemento Itens[], int Quantidades[]);
+void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro);
 
 /**
  * @brief Realiza as ramificações pelo método Branch Bound.
