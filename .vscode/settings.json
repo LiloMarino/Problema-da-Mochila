@@ -9,7 +9,10 @@
         "cmath": "c",
         "stdio.h": "c",
         "geradores.h": "c",
-        "efficiency.h": "c"
+        "efficiency.h": "c",
+        "random": "c",
+        "limits": "c",
+        "algorithm": "c"
     },
     "makefile.launchConfigurations": [
         {

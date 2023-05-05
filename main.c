@@ -31,7 +31,16 @@ int main()
 #include "Bibliotecas/geradores.h"
 int main()
 {
-    /*Gera 20 Elementos com Tamanhos e Prioridades com o intervalo de 1 a 200*/
-    GerarMatrizInt(CAPACIDADE_DA_MOCHILA / 4, CAPACIDADE_DA_MOCHILA, NUMERO_DE_ITEMS, 2, "../dados.txt");
+    FILE *dados;
+    for (int i = 0; i < NUMERO_DE_CASOS; i++)
+    {
+        dados = CriaLog("dados");
+        for (int j = 0; j < NUMERO_DE_ITEMS; j++)
+        {
+            fprintf(dados, "%d ", GerarNumeroInt(TAMANHO_MIN,TAMANHO_MAX)); // Gera Tamanho
+            fprintf(dados, "%d \n", GerarNumeroInt(PRIORIDADE_MIN,PRIORIDADE_MAX)); // Gera Prioridade
+        }
+        fclose(dados);
+    }
 }
 #endif

@@ -5,7 +5,7 @@
 #include <math.h>
 
 /*Função para imprimir um vetor de inteiros*/
-void ImprimeVetorInt(const int vetor_int[], const int ni, FILE *registro)
+void PrintVetorInt(const int vetor_int[], const int ni, FILE *registro)
 {
     // Imprime o vetor int
     for (int i = 0; i < ni; i++)
@@ -86,7 +86,7 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro)
     }
     printf("Solucao:\n");
     fprintf(registro, "Solucao:\n");
-    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+    PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
     fprintf(registro, "Valor: %d\n", MSolucao);
 }
@@ -113,7 +113,7 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
     *MSolucao = 0;
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
 #if SHOW_ONLY_ANSWER != 1
-    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
+    PrintVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
     return CapacRestante;
 }
@@ -155,7 +155,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
     }
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
 #if SHOW_ONLY_ANSWER != 1
-    ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
+    PrintVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
 }
 
@@ -205,7 +205,7 @@ void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro)
     RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, Podado, registro);
     printf("Solucao:\n");
     fprintf(registro, "Solucao:\n");
-    ImprimeVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+    PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
     printf("Valor: %d\n", MSolucao);
     fprintf(registro, "Valor: %d\n", MSolucao);
 }
@@ -250,7 +250,7 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
         }
         AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
 #if SHOW_ONLY_ANSWER != 1
-        ImprimeVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
+        PrintVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
     }
     /*Continua...*/
