@@ -31,6 +31,7 @@ int main()
         fprintf(registro, "\nTempo total de execução: %lf segundos.\n", finalizarTempo());
         fclose(registro);
 #endif
+        BarraDeProgresso(i,NUMERO_DE_CASOS);
         sprintf(nome_arquivo, "dados-%d.txt", i+1);
     }
 }

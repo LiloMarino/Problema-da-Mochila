@@ -15,8 +15,8 @@
 
 /*Configurações de Execução*/
 #define SHOW_ONLY_ANSWER 0 /* 1 = True, 0 = False, Ignora SHOW_ON_TERMINAL*/
-#define SHOW_ON_TERMINAL 1 /* 1 = True, 0 = False*/
+#define SHOW_ON_TERMINAL 0 /* 1 = True, 0 = False*/
 #define CREATE_REGISTRO 1 /* 1 = True, 0 = False, Recomendado criar somente para casos pequenos*/
-#define METHOD_USE 0 /* 0 = All, 1 = Gulosa, 2 = BranchBound*/
+#define METHOD_USE 2 /* 0 = All, 1 = Gulosa, 2 = BranchBound*/
 
 #endif
