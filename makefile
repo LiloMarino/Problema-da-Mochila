@@ -6,9 +6,11 @@ FONTES = main.c arvore.c Bibliotecas/learquivo.c Bibliotecas/efficiency.c Biblio
 
 # Pasta de saída
 OUTPUT = output/
+LOGS = $(OUTPUT)logs/
 
 # Cria a pasta de saída se ela não existir
 $(shell mkdir -p $(OUTPUT) $(OUTPUT)Bibliotecas)
+$(shell mkdir -p $(LOGS))
 
 # Arquivos objeto na pasta de saída
 OBJETOS = $(addprefix $(OUTPUT), $(FONTES:.c=.o))
