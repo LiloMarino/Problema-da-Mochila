@@ -1,4 +1,5 @@
 {
+    "C_Cpp.errorSquiggles": "disabled",
     "makefile.launchConfigurations": [
         {
             "cwd": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output",
@@ -8,6 +9,6 @@
     ],
     "files.associations": {
         "config.h": "c",
-        "cmath": "c"
+        "cmath": "c",
     }
 }
