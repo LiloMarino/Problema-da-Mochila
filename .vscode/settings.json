@@ -1,29 +1,13 @@
 {
-    "C_Cpp.errorSquiggles": "disabled",
-    "files.associations": {
-        "xlsxwriter.h": "c",
-        "workbook.h": "c",
-        "worksheet.h": "c",
-        "arvore.h": "c",
-        "learquivo.h": "c",
-        "cmath": "c",
-        "stdio.h": "c",
-        "geradores.h": "c",
-        "efficiency.h": "c",
-        "random": "c",
-        "limits": "c",
-        "algorithm": "c"
-    },
     "makefile.launchConfigurations": [
         {
             "cwd": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output",
             "binaryPath": "/home/lilo/Faculdade/MatemáticaDiscreta/Problema-da-Mochila/output/mochila",
             "binaryArgs": []
-        },
-        {
-            "cwd": "g:\\Outros computadores\\Meu laptop\\Faculdade\\MatemáticaDiscreta\\Problema da Mochila\\output",
-            "binaryPath": "g:\\Outros computadores\\Meu laptop\\Faculdade\\MatemáticaDiscreta\\Problema da Mochila\\output\\mochila",
-            "binaryArgs": []
         }
     ],
+    "files.associations": {
+        "config.h": "c",
+        "cmath": "c"
+    }
 }

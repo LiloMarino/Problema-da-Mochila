@@ -1,5 +1,58 @@
 #include "config.h"
 
+/*Define a classe da mochila*/
+#if CLASSE_DA_MOCHILA == 1
+const char classe[] = "Classe P1";
+#define CAPACIDADE_DA_MOCHILA 500
+#define NUMERO_DE_ITEMS 100
+#define TAMANHO_MIN 10
+#define TAMANHO_MAX 200
+#define PRIORIDADE_MIN 10
+#define PRIORIDADE_MAX 100
+#elif CLASSE_DA_MOCHILA == 2
+const char classe[] = "Classe P2";
+#define CAPACIDADE_DA_MOCHILA 500
+#define NUMERO_DE_ITEMS 100
+#define TAMANHO_MIN 200
+#define TAMANHO_MAX 500
+#define PRIORIDADE_MIN 10
+#define PRIORIDADE_MAX 100
+#elif CLASSE_DA_MOCHILA == 3
+const char classe[] = "Classe M1";
+#define CAPACIDADE_DA_MOCHILA 500
+#define NUMERO_DE_ITEMS 1000
+#define TAMANHO_MIN 10
+#define TAMANHO_MAX 200
+#define PRIORIDADE_MIN 10
+#define PRIORIDADE_MAX 100
+#elif CLASSE_DA_MOCHILA == 4
+const char classe[] = "Classe M2";
+#define CAPACIDADE_DA_MOCHILA 500
+#define NUMERO_DE_ITEMS 1000
+#define TAMANHO_MIN 200
+#define TAMANHO_MAX 500
+#define PRIORIDADE_MIN 10
+#define PRIORIDADE_MAX 100
+#elif CLASSE_DA_MOCHILA == 5
+const char classe[] = "Classe G1";
+#define CAPACIDADE_DA_MOCHILA 500
+#define NUMERO_DE_ITEMS 10000
+#define TAMANHO_MIN 10
+#define TAMANHO_MAX 200
+#define PRIORIDADE_MIN 10
+#define PRIORIDADE_MAX 100
+#elif CLASSE_DA_MOCHILA == 6
+const char classe[] = "Classe G2";
+#define CAPACIDADE_DA_MOCHILA 500
+#define NUMERO_DE_ITEMS 10000
+#define TAMANHO_MIN 200
+#define TAMANHO_MAX 500
+#define PRIORIDADE_MIN 10
+#define PRIORIDADE_MAX 100
+#else
+const char classe[] = "Classe Custom";
+#endif
+
 #if GERAR == 0
 #include <stdio.h>
 #include <string.h>
@@ -8,17 +61,23 @@
 #include "Bibliotecas/geradores.h"
 int main()
 {
+    /*Inicializa as variáveis*/
     Elemento Itens[NUMERO_DE_ITEMS];
     int Quantidades[NUMERO_DE_ITEMS] = {0};
     FILE *registro;
+    char nome_log[20] = "logs/";
+    strcat(nome_log,classe);
+    FILE *log = CriaLog(nome_log);
     char nome_arquivo[20] = "dados.txt";
     for (int i = 1; i <= NUMERO_DE_CASOS; i++)
     {
+        /*Lê os dados do arquivo i*/
         LerDados(nome_arquivo, Itens);
 #if METHOD_USE != 2
 #if SHOW_ON_TERMINAL == 1
         printf("METODO HEURISTICA GULOSA:\n");
 #endif
+        /*Realiza pela Heuristica Gulosa*/
         registro = CriaLog("HeuristicaGulosa");
         iniciarTempo();
         HeuristicaGulosa(Itens, Quantidades, registro);
@@ -29,6 +88,7 @@ int main()
 #if SHOW_ON_TERMINAL == 1
         printf("METODO BRANCH BOUND:\n");
 #endif
+        /*Realiza pelo Branch Bound*/
         registro = CriaLog("BranchBound");
         iniciarTempo();
         BranchBound(Itens, Quantidades, registro);
@@ -36,11 +96,13 @@ int main()
         fclose(registro);
 #endif
 #if SHOW_ON_TERMINAL == 0
+        /*Mostra uma barra de progresso que avança conforme os casos vão sendo analisados*/
         BarraDeProgresso(i, NUMERO_DE_CASOS);
 #endif
         sprintf(nome_arquivo, "dados-%d.txt", i + 1);
     }
     printf("\n");
+    fclose(log);
 }
 #elif GERAR == 1
 #include "Bibliotecas/geradores.h"
