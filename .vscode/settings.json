@@ -10,5 +10,7 @@
     "files.associations": {
         "config.h": "c",
         "cmath": "c",
+        "geradores.h": "c",
+        "efficiency.h": "c"
     }
 }

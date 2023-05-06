@@ -21,8 +21,48 @@ void PrintVetorInt(const int vetor_int[], const int ni, FILE *registro)
     fprintf(registro, "\n");
 }
 
-/*Função usada para o qsort ordenar o vetor de Elementos*/
-int ComparaElementos(const void *a, const void *b)
+/*Função usada para o qsort ordenar o vetor de Elementos conforme o Tamanho*/
+int ComparaTamanho(const void *a, const void *b)
+{
+    const Elemento *elem1 = (const Elemento *)a;
+    const Elemento *elem2 = (const Elemento *)b;
+
+    if (elem1->Tamanho > elem2->Tamanho)
+    {
+        return -1;
+    }
+    else if (elem1->Tamanho < elem2->Tamanho)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/*Função usada para o qsort ordenar o vetor de Elementos conforme o Prioridade*/
+int ComparaPrioridade(const void *a, const void *b)
+{
+    const Elemento *elem1 = (const Elemento *)a;
+    const Elemento *elem2 = (const Elemento *)b;
+
+    if (elem1->Prioridade > elem2->Prioridade)
+    {
+        return -1;
+    }
+    else if (elem1->Prioridade < elem2->Prioridade)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/*Função usada para o qsort ordenar o vetor de Elementos conforme o Fator*/
+int ComparaFator(const void *a, const void *b)
 {
     const Elemento *elem1 = (const Elemento *)a;
     const Elemento *elem2 = (const Elemento *)b;
@@ -60,7 +100,7 @@ void LerDados(char *fn, Elemento Itens[])
     }
 
     /*Ordena os Itens do maior Fator para o menor utilizando a função qsort*/
-    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaElementos);
+    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaFator);
 }
 
 bool AntiStackOverflow(const int Quantidades[])
@@ -84,6 +124,56 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro)
     {
         ProximosRamos(Itens, Quantidades, &CapacRestante, MelhorSolucao, &MSolucao, registro);
     }
+#if SHOW_ON_TERMINAL == 1
+    printf("Solucao:\n");
+#endif
+    fprintf(registro, "Solucao:\n");
+    PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+#if SHOW_ON_TERMINAL == 1
+    printf("Valor: %d\n", MSolucao);
+#endif
+    fprintf(registro, "Valor: %d\n", MSolucao);
+}
+
+void HeuristicaMOPT(const Elemento Itens[], int Quantidades[], FILE *registro)
+{
+    int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
+    int MSolucao = 0;
+    PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
+#if SHOW_ON_TERMINAL == 1
+    printf("Solucao:\n");
+#endif
+    fprintf(registro, "Solucao:\n");
+    PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+#if SHOW_ON_TERMINAL == 1
+    printf("Valor: %d\n", MSolucao);
+#endif
+    fprintf(registro, "Valor: %d\n", MSolucao);
+}
+
+void HeuristicaMOP(Elemento Itens[], int Quantidades[], FILE *registro)
+{
+    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaPrioridade);
+    int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
+    int MSolucao = 0;
+    PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
+#if SHOW_ON_TERMINAL == 1
+    printf("Solucao:\n");
+#endif
+    fprintf(registro, "Solucao:\n");
+    PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+#if SHOW_ON_TERMINAL == 1
+    printf("Valor: %d\n", MSolucao);
+#endif
+    fprintf(registro, "Valor: %d\n", MSolucao);
+}
+
+void HeuristicaMOT(Elemento Itens[], int Quantidades[], FILE *registro)
+{
+    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaTamanho);
+    int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
+    int MSolucao = 0;
+    PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
 #if SHOW_ON_TERMINAL == 1
     printf("Solucao:\n");
 #endif

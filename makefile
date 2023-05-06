@@ -6,7 +6,7 @@ FONTES = main.c arvore.c Bibliotecas/learquivo.c Bibliotecas/efficiency.c Biblio
 
 # Pasta de saída
 OUTPUT = output/
-LOGS = $(OUTPUT)logs/
+LOGS = logs/
 
 # Cria a pasta de saída se ela não existir
 $(shell mkdir -p $(OUTPUT) $(OUTPUT)Bibliotecas)

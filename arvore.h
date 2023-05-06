@@ -27,8 +27,35 @@ void LerDados(char *fn, Elemento Itens[]);
  *  @note Recomendado apenas para a elaboração de outros métodos por conta da sua ineficiência.
  *  @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
  *  @param Quantidades Vetor de Quantidades já inicializado.
- * */
+ *  @param registro Ponteiro para o arquivo de log
+ */
 void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro);
+
+/**
+ * @brief Resolve o problema pelo método da Heurística Míope com Ordenação de Prioridade/Tamanho
+ * @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
+ * @param Quantidades Vetor de Quantidades já inicializado.
+ * @param registro Ponteiro para o arquivo de log
+ */
+void HeuristicaMOPT(const Elemento Itens[], int Quantidades[], FILE *registro);
+
+/**
+ * @brief Resolve o problema pelo método da Heurística Míope com Ordenação de Prioridade
+ * @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
+ * @param Quantidades Vetor de Quantidades já inicializado.
+ * @param registro Ponteiro para o arquivo de log
+ * @warning A função reordena a base de dados dos itens
+ */
+void HeuristicaMOP(Elemento Itens[], int Quantidades[], FILE *registro);
+
+/**
+ * @brief Resolve o problema pelo método da Heurística Míope com Ordenação de Tamanho
+ * @param Itens Vetor de elementos contendo informações de tamanho, prioridade e quantidade máxima de cada item.
+ * @param Quantidades Vetor de Quantidades já inicializado.
+ * @param registro Ponteiro para o arquivo de log
+ * @warning A função reordena a base de dados dos itens
+ */
+void HeuristicaMOT(Elemento Itens[], int Quantidades[], FILE *registro);
 
 /**
  *  @brief Faz a primeira ramificação da árvore
@@ -73,6 +100,7 @@ int CalculaSolucao(const Elemento Itens[], const int Quantidades[]);
  * @brief Resolve o problema pelo método Branch Bound.
  * @param Itens Vetor contendo a base de dados dos itens.
  * @param Quantidades Vetor de Quantidades já inicializado.
+ * @param registro Ponteiro para o arquivo de log
  */
 void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro);
 
