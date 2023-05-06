@@ -33,7 +33,7 @@ int main()
         char nome_arquivo[20] = "dados.txt";
         strcat(nome_log, classe);
         FILE *registro;
-        FILE *log = CriaLog(nome_log,"csv");
+        FILE *log = CriaLog(nome_log, "csv");
 #if METHOD_USE == 0
         fprintf(log, "MOPT,BranchBound,MOP,MOT\n");
 #endif
@@ -41,7 +41,7 @@ int main()
         for (int i = 1; i <= NUMERO_DE_CASOS; i++)
         {
 #if UNICO_REGISTRO_POR_MOCHILA == 1
-                registro = CriaLog("RegistroGeral","txt");
+                registro = CriaLog("RegistroGeral", "txt");
 #endif
                 /*Lê os dados do arquivo i*/
                 LerDados(nome_arquivo, Itens);
@@ -51,7 +51,7 @@ int main()
 #endif
                 /*Realiza pela Heurística Míope com Ordenação de Prioridade/Tamanho*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOPT","txt");
+                registro = CriaLog("HeuristicaMOPT", "txt");
 #else
                 fprintf(registro, "METODO HEURISTICA MOPT:\n");
 #endif
@@ -70,7 +70,7 @@ int main()
 #endif
                 /*Realiza pelo Branch Bound*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("BranchBound","txt");
+                registro = CriaLog("BranchBound", "txt");
 #else
                 fprintf(registro, "METODO BRANCH BOUND:\n");
 #endif
@@ -89,7 +89,7 @@ int main()
 #endif
                 /*Realiza pela Heurística Míope com Ordenação de Prioridade*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOP","txt");
+                registro = CriaLog("HeuristicaMOP", "txt");
 #else
                 fprintf(registro, "METODO HEURISTICA MOP:\n");
 #endif
@@ -108,7 +108,7 @@ int main()
 #endif
                 /*Realiza pela Heurística Míope com Ordenação de Tamanho*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOT","txt");
+                registro = CriaLog("HeuristicaMOT", "txt");
 #else
                 fprintf(registro, "METODO HEURISTICA MOT:\n");
 #endif
@@ -127,7 +127,7 @@ int main()
 #endif
                 /*Realiza pela Heuristica Gulosa*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaGulosa","txt");
+                registro = CriaLog("HeuristicaGulosa", "txt");
 #else
                 fprintf(registro, "METODO HEURISTICA GULOSA:\n");
 #endif
@@ -162,7 +162,7 @@ int main()
         FILE *dados;
         for (int i = 0; i < NUMERO_DE_CASOS; i++)
         {
-                dados = CriaLog("dados","txt");
+                dados = CriaLog("dados", "txt");
                 for (int j = 0; j < NUMERO_DE_ITEMS; j++)
                 {
                         fprintf(dados, "%d ", GerarNumeroInt(TAMANHO_MIN, TAMANHO_MAX));         // Gera Tamanho
@@ -183,8 +183,11 @@ int main()
         /*Compila os valores dos registros em um único arquivo e deleta todos os registros gerais*/
         char nome_log[40] = "../logs/Compilado-";
         strcat(nome_log, classe);
-        FILE *compilado = CriaLog(nome_log,"csv");
+        FILE *compilado = CriaLog(nome_log, "csv");
         ArqCmds *registro;
+#if DELETE_DADOS == 1
+        char nome_dados[30] = "dados.txt";
+#endif
         char nome_arquivo[30] = "RegistroGeral.txt";
         registro = abreArquivoCmd(nome_arquivo);
         char *str = NULL;
@@ -208,6 +211,10 @@ int main()
                 fechaArquivoCmd(registro);
                 remove(nome_arquivo); // Deleta o arquivo
                 sprintf(nome_arquivo, "RegistroGeral-%d.txt", i + 1);
+#if DELETE_DADOS == 1
+                remove(nome_dados);
+                sprintf(nome_dados, "dados-%d.txt", i + 1);
+#endif
                 registro = abreArquivoCmd(nome_arquivo);
                 BarraDeProgresso(i, NUMERO_DE_CASOS);
         }
