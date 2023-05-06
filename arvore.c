@@ -103,26 +103,15 @@ void LerDados(char *fn, Elemento Itens[])
     qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaFator);
 }
 
-bool AntiStackOverflow(const int Quantidades[])
-{
-    for (int i = 0; i < NUMERO_DE_ITEMS; i++)
-    {
-        if (Quantidades[i])
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro)
 {
     int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
+    bool AntiStackOverflow = true;
     int MSolucao = 0;
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
-    while (AntiStackOverflow(Quantidades))
+    while (AntiStackOverflow)
     {
-        ProximosRamos(Itens, Quantidades, &CapacRestante, MelhorSolucao, &MSolucao, registro);
+        AntiStackOverflow = ProximosRamos(Itens, Quantidades, &CapacRestante, MelhorSolucao, &MSolucao, registro);
     }
 #if SHOW_ON_TERMINAL == 1
     printf("Solucao:\n");
@@ -212,7 +201,7 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
     return CapacRestante;
 }
 
-void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro)
+bool ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro)
 {
     /*Acha o primeiro elemento diferente de 0 e subtrai 1 dele*/
     int j = -1;
@@ -230,7 +219,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
     if (j == -1)
     {
         /*Não foi encontrado um elemento diferente de 0*/
-        return;
+        return false;
     }
 
     /*Verifica se cabe mais dos próximos itens*/
@@ -251,6 +240,7 @@ void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
 #if SHOW_ONLY_ANSWER != 1
     PrintVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
+    return true;
 }
 
 void AnalisaSolucao(const Elemento Itens[], const int Quantidades[], int MelhorSolucao[], int *MSolucao)
@@ -290,13 +280,17 @@ void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro)
 {
     int MelhorSolucao[NUMERO_DE_ITEMS];
     int MSolucao = 0;
+    bool AntiStackOverflow = true;
     int CapacRestante = PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
     /*Inicializa o vetor de poda*/
     bool Podado[NUMERO_DE_ITEMS];
     ReiniciaPoda(Podado);
 
     /*Realiza as ramificações pelo método BranchBound*/
-    RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, Podado, registro);
+    while (AntiStackOverflow)
+    {
+        AntiStackOverflow = RamificaBranchBound(Itens, Quantidades, &CapacRestante, MelhorSolucao, &MSolucao, Podado, registro);
+    }
 #if SHOW_ON_TERMINAL == 1
     printf("Solucao:\n");
 #endif
@@ -308,7 +302,7 @@ void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro)
     fprintf(registro, "Valor: %d\n", MSolucao);
 }
 
-void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro)
+bool RamificaBranchBound(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro)
 {
     /*Acha o primeiro elemento diferente de 0 que não esteja podado*/
     int k = -1;
@@ -324,7 +318,7 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
     if (k == -1)
     {
         /*Não foi encontrado um elemento diferente de 0 ou não podado*/
-        return;
+        return false;
     }
 
     /*Verifica se é necessário ramificar*/
@@ -332,18 +326,18 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
     {
         /*Subtrai 1 do k-ésimo item*/
         Quantidades[k] -= 1;
-        CapacRestante += Itens[k].Tamanho;
+        *CapacRestante += Itens[k].Tamanho;
 
         /*Verifica se cabe mais dos próximos itens*/
         for (int i = k + 1; i < NUMERO_DE_ITEMS; i++)
         {
             int qntde = 1;
-            while (CapacRestante - Itens[i].Tamanho * qntde >= 0)
+            while (*CapacRestante - Itens[i].Tamanho * qntde >= 0)
             {
                 qntde++;
             }
             qntde--;
-            CapacRestante -= qntde * Itens[i].Tamanho;
+            *CapacRestante -= qntde * Itens[i].Tamanho;
             Quantidades[i] = qntde;
         }
         AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
@@ -351,8 +345,7 @@ void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRes
         PrintVetorInt(Quantidades, NUMERO_DE_ITEMS, registro);
 #endif
     }
-    /*Continua...*/
-    RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, MSolucao, Podado, registro);
+    return true;
 }
 
 int CalculaLimitante(const Elemento Itens[], const int Quantidades[], const int k)

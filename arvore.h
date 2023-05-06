@@ -77,7 +77,7 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
  *  @param MSolucao Endereço do variável que contém a melhor solução atual do problema.
  *  @param registro Ponteiro para o arquivo de log
  * */
-void ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro);
+bool ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, FILE *registro);
 
 /**
  * @brief Verifica se a solução atual é melhor que a melhor solução e caso seja melhor substitui em MelhorSolucao
@@ -114,7 +114,7 @@ void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro);
  * @param Podado Vetor que indica se o elemento da árvore está podado ou não.
  * @param registro Ponteiro para o arquivo de log
  */
-void RamificaBranchBound(const Elemento Itens[], int Quantidades[], int CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro);
+bool RamificaBranchBound(const Elemento Itens[], int Quantidades[], int *CapacRestante, int MelhorSolucao[], int *MSolucao, bool Podado[], FILE *registro);
 
 /**
  * @brief Calcula o Limitante do Ramo Atual para a verificação de poda.
