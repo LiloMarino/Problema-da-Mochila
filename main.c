@@ -221,4 +221,38 @@ int main()
         printf("\n");
         fclose(compilado);
 }
+#elif MODO == 3
+#include <stdio.h>
+#include <string.h>
+#include "Bibliotecas/geradores.h"
+int main()
+{
+        FILE *Final = CriaLog("Final","csv");
+        FILE *Tempo[3];
+        FILE *Valor[3];
+        char Tipo[4] = "PMG";
+        char nome_tempo[] = "../logs/Classe ";
+        char nome_valor[] = "../logs/Compilado-Classe ";
+        char aux[50] = "\0";
+        fprintf(Final,"Tempo Classe P1,,,,Valor Classe P1,,,,Tempo Classe P2,,,,Valor Classe P2,,,,Tempo Classe M1,,,,Valor Classe M1,,,,Tempo Classe M2,,,,Valor Classe M2,,,,Tempo Classe G1,,,,Valor Classe G1,,,,Tempo Classe G2,,,,Valor Classe G2,,,\n");
+        for (int j = 0; j < 3; j++)
+        {
+                for (int i = 1; i <= 2; i++)
+                {
+                        sprintf(aux,"%s%c%d",nome_tempo,Tipo[j],i);
+                        Tempo[j] = fopen(aux);
+                        sprintf(aux,"%s%c%d",nome_tempo,Tipo[j],i);
+                        Valor[j] = fopen(aux);
+                }
+        }
+        for (int j = 0; j < 3; j++)
+        {
+                for (int i = 1; i <= 2; i++)
+                {
+                        fclose(Tempo[j]);
+                        fclose(Valor[j]);
+                }
+        }
+        fclose(Final);
+}
 #endif
