@@ -33,15 +33,15 @@ int main()
         char nome_arquivo[20] = "dados.txt";
         strcat(nome_log, classe);
         FILE *registro;
-        FILE *log = CriaLog(nome_log);
+        FILE *log = CriaLog(nome_log,"csv");
 #if METHOD_USE == 0
-        fprintf(log, "MOPT      BranchBound     MOP     MOT\n");
+        fprintf(log, "MOPT,BranchBound,MOP,MOT\n");
 #endif
         /*Inicia os testes*/
         for (int i = 1; i <= NUMERO_DE_CASOS; i++)
         {
 #if UNICO_REGISTRO_POR_MOCHILA == 1
-                registro = CriaLog("RegistroGeral");
+                registro = CriaLog("RegistroGeral","txt");
 #endif
                 /*Lê os dados do arquivo i*/
                 LerDados(nome_arquivo, Itens);
@@ -51,7 +51,7 @@ int main()
 #endif
                 /*Realiza pela Heurística Míope com Ordenação de Prioridade/Tamanho*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOPT");
+                registro = CriaLog("HeuristicaMOPT","txt");
 #else
                 fprintf(registro, "METODO HEURISTICA MOPT:\n");
 #endif
@@ -59,7 +59,7 @@ int main()
                 HeuristicaMOPT(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf ", segundos);
+                fprintf(log, "%lf,", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -70,7 +70,7 @@ int main()
 #endif
                 /*Realiza pelo Branch Bound*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("BranchBound");
+                registro = CriaLog("BranchBound","txt");
 #else
                 fprintf(registro, "METODO BRANCH BOUND:\n");
 #endif
@@ -78,7 +78,7 @@ int main()
                 BranchBound(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf ", segundos);
+                fprintf(log, "%lf,", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -89,7 +89,7 @@ int main()
 #endif
                 /*Realiza pela Heurística Míope com Ordenação de Prioridade*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOP");
+                registro = CriaLog("HeuristicaMOP","txt");
 #else
                 fprintf(registro, "METODO HEURISTICA MOP:\n");
 #endif
@@ -97,7 +97,7 @@ int main()
                 HeuristicaMOP(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf ", segundos);
+                fprintf(log, "%lf,", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -108,7 +108,7 @@ int main()
 #endif
                 /*Realiza pela Heurística Míope com Ordenação de Tamanho*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOT");
+                registro = CriaLog("HeuristicaMOT","txt");
 #else
                 fprintf(registro, "METODO HEURISTICA MOT:\n");
 #endif
@@ -116,7 +116,7 @@ int main()
                 HeuristicaMOT(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf ", segundos);
+                fprintf(log, "%lf,", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -127,7 +127,7 @@ int main()
 #endif
                 /*Realiza pela Heuristica Gulosa*/
 #if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaGulosa");
+                registro = CriaLog("HeuristicaGulosa","txt");
 #else
                 fprintf(registro, "METODO HEURISTICA GULOSA:\n");
 #endif
@@ -135,7 +135,7 @@ int main()
                 HeuristicaGulosa(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf ", segundos);
+                fprintf(log, "%lf,", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -162,7 +162,7 @@ int main()
         FILE *dados;
         for (int i = 0; i < NUMERO_DE_CASOS; i++)
         {
-                dados = CriaLog("dados");
+                dados = CriaLog("dados","txt");
                 for (int j = 0; j < NUMERO_DE_ITEMS; j++)
                 {
                         fprintf(dados, "%d ", GerarNumeroInt(TAMANHO_MIN, TAMANHO_MAX));         // Gera Tamanho
@@ -183,14 +183,14 @@ int main()
         /*Compila os valores dos registros em um único arquivo e deleta todos os registros gerais*/
         char nome_log[40] = "../logs/Compilado-";
         strcat(nome_log, classe);
-        FILE *compilado = CriaLog(nome_log);
+        FILE *compilado = CriaLog(nome_log,"csv");
         ArqCmds *registro;
         char nome_arquivo[30] = "RegistroGeral.txt";
         registro = abreArquivoCmd(nome_arquivo);
         char *str = NULL;
         char *param = NULL;
         int Valor;
-        fprintf(compilado, "MOPT      BranchBound     MOP     MOT\n");
+        fprintf(compilado, "MOPT,BranchBound,MOP,MOT\n");
         for (int i = 1; registro != NULL; i++)
         {
                 /*Atribuição dos Valores*/
@@ -200,7 +200,7 @@ int main()
                         if (strcmp(param, "Valor:") == 0)
                         {
                                 sscanf(str, "Valor: %d", &Valor);
-                                fprintf(compilado, "%d ", Valor);
+                                fprintf(compilado, "%d,", Valor);
                         }
                         free(param);
                 }
@@ -211,6 +211,7 @@ int main()
                 registro = abreArquivoCmd(nome_arquivo);
                 BarraDeProgresso(i, NUMERO_DE_CASOS);
         }
+        printf("\n");
         fclose(compilado);
 }
 #endif

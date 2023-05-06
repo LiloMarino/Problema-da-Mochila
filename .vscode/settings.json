@@ -14,6 +14,8 @@
         "efficiency.h": "c",
         "string.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "*.tcc": "c",
+        "cstdio": "c"
     }
 }
