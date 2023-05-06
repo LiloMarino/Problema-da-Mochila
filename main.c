@@ -3,52 +3,16 @@
 /*Define a classe da mochila*/
 #if CLASSE_DA_MOCHILA == 1
 const char classe[] = "Classe P1";
-#define CAPACIDADE_DA_MOCHILA 500
-#define NUMERO_DE_ITEMS 100
-#define TAMANHO_MIN 10
-#define TAMANHO_MAX 200
-#define PRIORIDADE_MIN 10
-#define PRIORIDADE_MAX 100
 #elif CLASSE_DA_MOCHILA == 2
 const char classe[] = "Classe P2";
-#define CAPACIDADE_DA_MOCHILA 500
-#define NUMERO_DE_ITEMS 100
-#define TAMANHO_MIN 200
-#define TAMANHO_MAX 500
-#define PRIORIDADE_MIN 10
-#define PRIORIDADE_MAX 100
 #elif CLASSE_DA_MOCHILA == 3
 const char classe[] = "Classe M1";
-#define CAPACIDADE_DA_MOCHILA 500
-#define NUMERO_DE_ITEMS 1000
-#define TAMANHO_MIN 10
-#define TAMANHO_MAX 200
-#define PRIORIDADE_MIN 10
-#define PRIORIDADE_MAX 100
 #elif CLASSE_DA_MOCHILA == 4
 const char classe[] = "Classe M2";
-#define CAPACIDADE_DA_MOCHILA 500
-#define NUMERO_DE_ITEMS 1000
-#define TAMANHO_MIN 200
-#define TAMANHO_MAX 500
-#define PRIORIDADE_MIN 10
-#define PRIORIDADE_MAX 100
 #elif CLASSE_DA_MOCHILA == 5
 const char classe[] = "Classe G1";
-#define CAPACIDADE_DA_MOCHILA 500
-#define NUMERO_DE_ITEMS 10000
-#define TAMANHO_MIN 10
-#define TAMANHO_MAX 200
-#define PRIORIDADE_MIN 10
-#define PRIORIDADE_MAX 100
 #elif CLASSE_DA_MOCHILA == 6
 const char classe[] = "Classe G2";
-#define CAPACIDADE_DA_MOCHILA 500
-#define NUMERO_DE_ITEMS 10000
-#define TAMANHO_MIN 200
-#define TAMANHO_MAX 500
-#define PRIORIDADE_MIN 10
-#define PRIORIDADE_MAX 100
 #else
 const char classe[] = "Classe Custom";
 #endif
