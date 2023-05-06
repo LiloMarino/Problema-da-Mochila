@@ -53,7 +53,7 @@ const char classe[] = "Classe G2";
 const char classe[] = "Classe Custom";
 #endif
 
-#if GERAR == 0 && COMPILA_REGISTRO_GERAL != 1
+#if MODO == 1
 #include <stdio.h>
 #include <string.h>
 #include "arvore.h"
@@ -190,7 +190,8 @@ int main()
         printf("\n");
         fclose(log);
 }
-#elif GERAR == 1 && COMPILA_REGISTRO_GERAL != 1
+
+#elif MODO == 0
 #include "Bibliotecas/geradores.h"
 int main()
 {
@@ -206,20 +207,40 @@ int main()
                 fclose(dados);
         }
 }
-#endif
-#if COMPILA_REGISTRO_GERAL == 1
+
+#elif MODO == 2
 #include <stdio.h>
+#include <string.h>
 #include "Bibliotecas/geradores.h"
+#include "Bibliotecas/learquivo.h"
 int main()
 {
         /*Compila os valores dos registros em um único arquivo e deleta todos os registros gerais*/
         FILE *compilado = CriaLog("../logs/Compilado");
-        FILE *registro;
-        char nome_arquivo[20] = "RegistroGeral.txt";
-        for (int i = 1; i <= NUMERO_DE_CASOS; i++)
+        ArqCmds *registro;
+        char nome_arquivo[30] = "RegistroGeral.txt";
+        char *str = NULL;
+        int Valor;
+        registro = abreArquivoCmd(nome_arquivo);
+        fprintf(compilado, "MOPT      BranchBound     MOP     MOT\n");
+        for (int i = 1; registro != NULL; i++)
         {
-                
+                /*Atribuição dos Valores*/
+                while (leLinha(registro, &str))
+                {
+                        if (strcmp(getParametroI(str, 0), "Valor:") == 0)
+                        {
+                                sscanf(str, "Valor: %d", &Valor);
+                                fprintf(compilado, "%d ", Valor);
+                        }
+                }
+                fprintf(compilado, "\n");
+                fechaArquivoCmd(registro);
+                remove(nome_arquivo); // Deleta o arquivo
+                sprintf(nome_arquivo, "RegistroGeral-%d.txt", i + 1);
+                registro = abreArquivoCmd(nome_arquivo);
+                BarraDeProgresso(i, NUMERO_DE_CASOS);
         }
-        sprintf(nome_arquivo, "RegistroGeral-%d.txt", i + 1);
+        fclose(compilado);
 }
 #endif

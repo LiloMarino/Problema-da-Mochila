@@ -11,6 +11,8 @@
         "config.h": "c",
         "cmath": "c",
         "geradores.h": "c",
-        "efficiency.h": "c"
+        "efficiency.h": "c",
+        "string.h": "c",
+        "stdio.h": "c"
     }
 }
