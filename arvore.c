@@ -381,12 +381,19 @@ bool VerificaRamificacao(const Elemento Itens[], const int Quantidades[], const 
         /*Compara com a melhor solução*/
         if (Limitante > *MSolucao)
         {
+#if SHOW_LIMITANT == 1 && SHOW_ON_TERMINAL == 1
+            printf("%d > %d \n", Limitante, *MSolucao);
+#endif
             /*Ramifica*/
             ReiniciaPoda(Podado);
             return true;
         }
         else
         {
+#if SHOW_LIMITANT == 1 && SHOW_ON_TERMINAL == 1
+            printf("%d < %d \n", Limitante, *MSolucao);
+            printf("Podado\n");
+#endif
             /*Poda*/
             Podado[k] = true;
             return false;
@@ -398,12 +405,19 @@ bool VerificaRamificacao(const Elemento Itens[], const int Quantidades[], const 
         int OtimaSolucao = CalculaSolucao(Itens, Quantidades);
         if (Limitante > OtimaSolucao)
         {
+#if SHOW_LIMITANT == 1 && SHOW_ON_TERMINAL == 1
+            printf("%d > %d \n", Limitante, OtimaSolucao);
+#endif
             /*Ramifica*/
             ReiniciaPoda(Podado);
             return true;
         }
         else
         {
+#if SHOW_LIMITANT == 1 && SHOW_ON_TERMINAL == 1
+            printf("%d < %d \n", Limitante, OtimaSolucao);
+            printf("Podado\n");
+#endif
             /*Poda*/
             Podado[k] = true;
             return false;
