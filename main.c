@@ -16,7 +16,9 @@ int main()
     {
         LerDados(nome_arquivo, Itens);
 #if METHOD_USE != 2
+#if SHOW_ON_TERMINAL == 1
         printf("METODO HEURISTICA GULOSA:\n");
+#endif
         registro = CriaLog("HeuristicaGulosa");
         iniciarTempo();
         HeuristicaGulosa(Itens, Quantidades, registro);
@@ -24,16 +26,21 @@ int main()
         fclose(registro);
 #endif
 #if METHOD_USE != 1
+#if SHOW_ON_TERMINAL == 1
         printf("METODO BRANCH BOUND:\n");
+#endif
         registro = CriaLog("BranchBound");
         iniciarTempo();
         BranchBound(Itens, Quantidades, registro);
         fprintf(registro, "\nTempo total de execução: %lf segundos.\n", finalizarTempo());
         fclose(registro);
 #endif
-        BarraDeProgresso(i,NUMERO_DE_CASOS);
-        sprintf(nome_arquivo, "dados-%d.txt", i+1);
+#if SHOW_ON_TERMINAL == 0
+        BarraDeProgresso(i, NUMERO_DE_CASOS);
+#endif
+        sprintf(nome_arquivo, "dados-%d.txt", i + 1);
     }
+    printf("\n");
 }
 #elif GERAR == 1
 #include "Bibliotecas/geradores.h"

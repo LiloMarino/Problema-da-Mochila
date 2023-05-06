@@ -84,10 +84,14 @@ void HeuristicaGulosa(const Elemento Itens[], int Quantidades[], FILE *registro)
     {
         ProximosRamos(Itens, Quantidades, &CapacRestante, MelhorSolucao, &MSolucao, registro);
     }
+#if SHOW_ON_TERMINAL == 1
     printf("Solucao:\n");
+#endif
     fprintf(registro, "Solucao:\n");
     PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+#if SHOW_ON_TERMINAL == 1
     printf("Valor: %d\n", MSolucao);
+#endif
     fprintf(registro, "Valor: %d\n", MSolucao);
 }
 
@@ -203,10 +207,14 @@ void BranchBound(const Elemento Itens[], int Quantidades[], FILE *registro)
 
     /*Realiza as ramificações pelo método BranchBound*/
     RamificaBranchBound(Itens, Quantidades, CapacRestante, MelhorSolucao, &MSolucao, Podado, registro);
+#if SHOW_ON_TERMINAL == 1
     printf("Solucao:\n");
+#endif
     fprintf(registro, "Solucao:\n");
     PrintVetorInt(MelhorSolucao, NUMERO_DE_ITEMS, registro);
+#if SHOW_ON_TERMINAL == 1
     printf("Valor: %d\n", MSolucao);
+#endif
     fprintf(registro, "Valor: %d\n", MSolucao);
 }
 
