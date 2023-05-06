@@ -183,14 +183,9 @@ int PrimeiroRamo(const Elemento Itens[], int Quantidades[], int MelhorSolucao[],
     /* Verifica se cabe mais dos próximos itens*/
     for (int i = 1; i < NUMERO_DE_ITEMS; i++)
     {
-        int qntde = 1;
-        while (CapacRestante - Itens[i].Tamanho * qntde >= 0)
-        {
-            qntde++;
-        }
-        qntde--;
-        CapacRestante -= qntde * Itens[i].Tamanho;
+        int qntde = CapacRestante / Itens[i].Tamanho;
         Quantidades[i] = qntde;
+        CapacRestante -= qntde * Itens[i].Tamanho;
     }
     /*Verifica a primeira Solução*/
     *MSolucao = 0;
@@ -226,15 +221,8 @@ bool ProximosRamos(const Elemento Itens[], int Quantidades[], int *CapacRestante
     for (int i = j; i < NUMERO_DE_ITEMS; i++)
     {
         int qntde = (*CapacRestante) / Itens[i].Tamanho;
-        if (qntde > 0)
-        {
-            Quantidades[i] = qntde;
-            *CapacRestante -= qntde * Itens[i].Tamanho;
-        }
-        else
-        {
-            Quantidades[i] = 0;
-        }
+        Quantidades[i] = qntde;
+        *CapacRestante -= qntde * Itens[i].Tamanho;
     }
     AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
 #if SHOW_ONLY_ANSWER != 1
@@ -331,14 +319,9 @@ bool RamificaBranchBound(const Elemento Itens[], int Quantidades[], int *CapacRe
         /*Verifica se cabe mais dos próximos itens*/
         for (int i = k + 1; i < NUMERO_DE_ITEMS; i++)
         {
-            int qntde = 1;
-            while (*CapacRestante - Itens[i].Tamanho * qntde >= 0)
-            {
-                qntde++;
-            }
-            qntde--;
-            *CapacRestante -= qntde * Itens[i].Tamanho;
+            int qntde = (*CapacRestante) / Itens[i].Tamanho;
             Quantidades[i] = qntde;
+            *CapacRestante -= qntde * Itens[i].Tamanho;
         }
         AnalisaSolucao(Itens, Quantidades, MelhorSolucao, MSolucao);
 #if SHOW_ONLY_ANSWER != 1
