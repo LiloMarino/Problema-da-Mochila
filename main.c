@@ -211,28 +211,34 @@ int main()
 #elif MODO == 2
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "Bibliotecas/geradores.h"
 #include "Bibliotecas/learquivo.h"
 int main()
 {
         /*Compila os valores dos registros em um único arquivo e deleta todos os registros gerais*/
-        FILE *compilado = CriaLog("../logs/Compilado");
+        char nome_log[40] = "../logs/Compilado-";
+        strcat(nome_log, classe);
+        FILE *compilado = CriaLog(nome_log);
         ArqCmds *registro;
         char nome_arquivo[30] = "RegistroGeral.txt";
-        char *str = NULL;
-        int Valor;
         registro = abreArquivoCmd(nome_arquivo);
+        char *str = NULL;
+        char *param = NULL;
+        int Valor;
         fprintf(compilado, "MOPT      BranchBound     MOP     MOT\n");
         for (int i = 1; registro != NULL; i++)
         {
                 /*Atribuição dos Valores*/
                 while (leLinha(registro, &str))
                 {
-                        if (strcmp(getParametroI(str, 0), "Valor:") == 0)
+                        param = getParametroI(str, 0);
+                        if (strcmp(param, "Valor:") == 0)
                         {
                                 sscanf(str, "Valor: %d", &Valor);
                                 fprintf(compilado, "%d ", Valor);
                         }
+                        free(param);
                 }
                 fprintf(compilado, "\n");
                 fechaArquivoCmd(registro);

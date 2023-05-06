@@ -13,6 +13,7 @@
         "geradores.h": "c",
         "efficiency.h": "c",
         "string.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }
