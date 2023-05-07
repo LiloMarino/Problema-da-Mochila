@@ -225,33 +225,88 @@ int main()
 #include <stdio.h>
 #include <string.h>
 #include "Bibliotecas/geradores.h"
+#include "Bibliotecas/learquivo.h"
 int main()
 {
-        FILE *Final = CriaLog("Final","csv");
-        FILE *Tempo[3];
-        FILE *Valor[3];
-        char Tipo[4] = "PMG";
+        FILE *Final = CriaLog("../logs/Final", "csv");
+        FILE *Tempo[6];
+        FILE *Valor[6];
+        char Tipo[] = "PMG";
         char nome_tempo[] = "../logs/Classe ";
         char nome_valor[] = "../logs/Compilado-Classe ";
         char aux[50] = "\0";
-        fprintf(Final,"Tempo Classe P1,,,,Valor Classe P1,,,,Tempo Classe P2,,,,Valor Classe P2,,,,Tempo Classe M1,,,,Valor Classe M1,,,,Tempo Classe M2,,,,Valor Classe M2,,,,Tempo Classe G1,,,,Valor Classe G1,,,,Tempo Classe G2,,,,Valor Classe G2,,,\n");
-        for (int j = 0; j < 3; j++)
+        fprintf(Final, "Tempo Classe P1,,,,Valor Classe P1,,,,Tempo Classe P2,,,,Valor Classe P2,,,,Tempo Classe M1,,,,Valor Classe M1,,,,Tempo Classe M2,,,,Valor Classe M2,,,,Tempo Classe G1,,,,Valor Classe G1,,,,Tempo Classe G2,,,,Valor Classe G2,,,\n");
+
+        int i = 0;
+        for (int j = 0; j < 6; j++)
         {
-                for (int i = 1; i <= 2; i++)
+                int k = j % 2 + 1;
+                sprintf(aux, "%s%c%d.csv", nome_tempo, Tipo[i], k);
+                Tempo[j] = fopen(aux, "r");
+                sprintf(aux, "%s%c%d.csv", nome_valor, Tipo[i], k);
+                Valor[j] = fopen(aux, "r");
+                if (k == 2)
                 {
-                        sprintf(aux,"%s%c%d",nome_tempo,Tipo[j],i);
-                        Tempo[j] = fopen(aux);
-                        sprintf(aux,"%s%c%d",nome_tempo,Tipo[j],i);
-                        Valor[j] = fopen(aux);
+                        i++;
                 }
         }
-        for (int j = 0; j < 3; j++)
+        char *str = NULL;
+
+        for (int k = 0; k < NUMERO_DE_CASOS + 1; k++)
         {
-                for (int i = 1; i <= 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                        fclose(Tempo[j]);
-                        fclose(Valor[j]);
+                        for (int j = 0; j < 2; j++)
+                        {
+                                // Lê uma linha do arquivo de tempo correspondente
+                                if (leLinha(Tempo[i * 2 + j], &str))
+                                {
+                                        // Encontra o comprimento da string até o caractere de nova linha
+                                        int len = strcspn(str, "\n");
+
+                                        // Imprime apenas a parte da string até o caractere de nova linha
+                                        fprintf(Final, "%.*s,", len, str);
+                                }
+                                else
+                                {
+                                        break;
+                                }
+
+                                // Lê uma linha do arquivo de valor correspondente
+                                if (leLinha(Valor[i * 2 + j], &str))
+                                {
+                                        // Encontra o comprimento da string até o caractere de nova linha
+                                        int len = strcspn(str, "\n");
+
+                                        // Imprime apenas a parte da string até o caractere de nova linha
+                                        fprintf(Final, "%.*s", len, str);
+                                }
+                                else
+                                {
+                                        break;
+                                }
+
+                                // Imprime uma vírgula entre as colunas, exceto na última coluna da linha
+                                if (j < 1)
+                                {
+                                        fprintf(Final, ",");
+                                }
+                        }
+
+                        // Imprime uma vírgula entre as classes, exceto na última classe
+                        if (i < 2)
+                        {
+                                fprintf(Final, ",,");
+                        }
                 }
+                BarraDeProgresso(k,NUMERO_DE_CASOS);
+                fprintf(Final, "\n");
+        }
+        printf("\n");
+        for (int j = 0; j < 6; j++)
+        {
+                fclose(Tempo[j]);
+                fclose(Valor[j]);
         }
         fclose(Final);
 }

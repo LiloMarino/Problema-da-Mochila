@@ -17,6 +17,7 @@
         "stdlib.h": "c",
         "*.tcc": "c",
         "cstdio": "c",
-        "stdio_lim.h": "c"
+        "stdio_lim.h": "c",
+        "learquivo.h": "c"
     }
 }
