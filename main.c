@@ -35,7 +35,7 @@ int main()
         FILE *registro;
         FILE *log = CriaLog(nome_log, "csv");
 #if METHOD_USE == 0
-        fprintf(log, "MOPT,BranchBound,MOP,MOT\n");
+        fprintf(log, "MOPT,BranchBound,MOP,MOT,\n");
 #endif
         /*Inicia os testes*/
         for (int i = 1; i <= NUMERO_DE_CASOS; i++)
@@ -193,7 +193,7 @@ int main()
         char *str = NULL;
         char *param = NULL;
         int Valor;
-        fprintf(compilado, "MOPT,BranchBound,MOP,MOT\n");
+        fprintf(compilado, "MOPT,BranchBound,MOP,MOT,\n");
         for (int i = 1; registro != NULL; i++)
         {
                 /*Atribuição dos Valores*/
@@ -263,7 +263,7 @@ int main()
                                 {
                                         // Encontra o comprimento da string até o caractere de nova linha
                                         int len = strcspn(str, "\n");
-
+                                        len--;
                                         // Imprime apenas a parte da string até o caractere de nova linha
                                         fprintf(Final, "%.*s,", len, str);
                                 }
@@ -277,7 +277,7 @@ int main()
                                 {
                                         // Encontra o comprimento da string até o caractere de nova linha
                                         int len = strcspn(str, "\n");
-
+                                        len--;
                                         // Imprime apenas a parte da string até o caractere de nova linha
                                         fprintf(Final, "%.*s", len, str);
                                 }
@@ -287,16 +287,16 @@ int main()
                                 }
 
                                 // Imprime uma vírgula entre as colunas, exceto na última coluna da linha
-                                if (j < 1)
+                                if (j != 1)
                                 {
                                         fprintf(Final, ",");
                                 }
                         }
 
                         // Imprime uma vírgula entre as classes, exceto na última classe
-                        if (i < 2)
+                        if (i != 2)
                         {
-                                fprintf(Final, ",,");
+                                fprintf(Final, ",");
                         }
                 }
                 BarraDeProgresso(k,NUMERO_DE_CASOS);
