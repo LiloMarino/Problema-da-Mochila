@@ -37,7 +37,9 @@ int main()
         FILE *registro;
         FILE *log = CriaLog(nome_log, "csv");
 #if METHOD_USE == 0
-        fprintf(log, "MOPT,BranchBound,MOP,MOT,\n");
+        fprintf(log, "BranchBound,MOPT,MOP,MOT,\n");
+#elif METHOD_USE == 6
+        fprintf(log, "BranchBound,MOPT,MOP,MOT,Gulosa,\n");
 #endif
         /*Inicia os testes*/
         for (int i = 1; i <= NUMERO_DE_CASOS; i++)
@@ -47,26 +49,7 @@ int main()
 #endif
                 /*Lê os dados do arquivo i*/
                 LerDados(nome_arquivo, Itens);
-#if METHOD_USE == 1 || METHOD_USE == 0
-#if SHOW_ON_TERMINAL == 1
-                printf("METODO HEURISTICA MOPT:\n");
-#endif
-                /*Realiza pela Heurística Míope com Ordenação de Prioridade/Tamanho*/
-#if UNICO_REGISTRO_POR_MOCHILA != 1
-                registro = CriaLog("HeuristicaMOPT", "txt");
-#else
-                fprintf(registro, "METODO HEURISTICA MOPT:\n");
-#endif
-                iniciarTempo();
-                HeuristicaMOPT(Itens, Quantidades, registro);
-                segundos = finalizarTempo();
-                fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "\"%lf\",",segundos);
-#if UNICO_REGISTRO_POR_MOCHILA != 1
-                fclose(registro);
-#endif
-#endif
-#if METHOD_USE == 2 || METHOD_USE == 0
+#if METHOD_USE == 1 || METHOD_USE == 0 || METHOD_USE == 6
 #if SHOW_ON_TERMINAL == 1
                 printf("METODO BRANCH BOUND:\n");
 #endif
@@ -85,7 +68,26 @@ int main()
                 fclose(registro);
 #endif
 #endif
-#if METHOD_USE == 3 || METHOD_USE == 0
+#if METHOD_USE == 2 || METHOD_USE == 0 || METHOD_USE == 6
+#if SHOW_ON_TERMINAL == 1
+                printf("METODO HEURISTICA MOPT:\n");
+#endif
+                /*Realiza pela Heurística Míope com Ordenação de Prioridade/Tamanho*/
+#if UNICO_REGISTRO_POR_MOCHILA != 1
+                registro = CriaLog("HeuristicaMOPT", "txt");
+#else
+                fprintf(registro, "METODO HEURISTICA MOPT:\n");
+#endif
+                iniciarTempo();
+                HeuristicaMOPT(Itens, Quantidades, registro);
+                segundos = finalizarTempo();
+                fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
+                fprintf(log, "\"%lf\",", segundos);
+#if UNICO_REGISTRO_POR_MOCHILA != 1
+                fclose(registro);
+#endif
+#endif
+#if METHOD_USE == 3 || METHOD_USE == 0 || METHOD_USE == 6
 #if SHOW_ON_TERMINAL == 1
                 printf("METODO HEURISTICA MOP:\n");
 #endif
@@ -104,7 +106,7 @@ int main()
                 fclose(registro);
 #endif
 #endif
-#if METHOD_USE == 4 || METHOD_USE == 0
+#if METHOD_USE == 4 || METHOD_USE == 0 || METHOD_USE == 6
 #if SHOW_ON_TERMINAL == 1
                 printf("METODO HEURISTICA MOT:\n");
 #endif
@@ -123,7 +125,7 @@ int main()
                 fclose(registro);
 #endif
 #endif
-#if METHOD_USE == 5
+#if METHOD_USE == 5 || METHOD_USE == 6
 #if SHOW_ON_TERMINAL == 1
                 printf("METODO HEURISTICA GULOSA:\n");
 #endif
@@ -195,7 +197,11 @@ int main()
         char *str = NULL;
         char *param = NULL;
         int Valor;
-        fprintf(compilado, "MOPT,BranchBound,MOP,MOT,\n");
+#if METHOD_USE == 0
+        fprintf(compilado, "BranchBound,MOPT,MOP,MOT,\n");
+#elif METHOD_USE == 6
+        fprintf(compilado, "BranchBound,MOPT,MOP,MOT,Gulosa,\n");
+#endif
         for (int i = 1; registro != NULL; i++)
         {
                 /*Atribuição dos Valores*/
