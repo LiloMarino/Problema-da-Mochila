@@ -18,6 +18,9 @@
         "*.tcc": "c",
         "cstdio": "c",
         "stdio_lim.h": "c",
-        "learquivo.h": "c"
+        "learquivo.h": "c",
+        "locale.h": "c",
+        "clocale": "c",
+        "arvore.h": "c"
     }
 }

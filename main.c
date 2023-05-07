@@ -1,4 +1,5 @@
 #include "config.h"
+#include <locale.h>
 
 /*Define a classe da mochila*/
 #if CLASSE_DA_MOCHILA == 1
@@ -25,6 +26,7 @@ const char classe[] = "Classe Custom";
 #include "Bibliotecas/geradores.h"
 int main()
 {
+        setlocale(LC_ALL, "pt_BR.utf8"); // Necessário para a leitura correta no excel ou no sheets
         /*Inicializa as variáveis*/
         Elemento Itens[NUMERO_DE_ITEMS];
         int Quantidades[NUMERO_DE_ITEMS] = {0};
@@ -59,7 +61,7 @@ int main()
                 HeuristicaMOPT(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf,", segundos);
+                fprintf(log, "\"%lf\",",segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -78,7 +80,7 @@ int main()
                 BranchBound(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf,", segundos);
+                fprintf(log, "\"%lf\",", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -97,7 +99,7 @@ int main()
                 HeuristicaMOP(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf,", segundos);
+                fprintf(log, "\"%lf\",", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -116,7 +118,7 @@ int main()
                 HeuristicaMOT(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf,", segundos);
+                fprintf(log, "\"%lf\",", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -135,7 +137,7 @@ int main()
                 HeuristicaGulosa(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
                 fprintf(registro, "\nTempo total de execução: %lf segundos.\n", segundos);
-                fprintf(log, "%lf,", segundos);
+                fprintf(log, "\"%lf\",", segundos);
 #if UNICO_REGISTRO_POR_MOCHILA != 1
                 fclose(registro);
 #endif
@@ -228,6 +230,7 @@ int main()
 #include "Bibliotecas/learquivo.h"
 int main()
 {
+        setlocale(LC_ALL, "pt_BR.utf8"); // Necessário para a leitura correta no excel ou no sheets
         FILE *Final = CriaLog("../logs/Final", "csv");
         FILE *Tempo[6];
         FILE *Valor[6];
@@ -258,13 +261,11 @@ int main()
                 {
                         for (int j = 0; j < 2; j++)
                         {
-                                // Lê uma linha do arquivo de tempo correspondente
                                 if (leLinha(Tempo[i * 2 + j], &str))
                                 {
                                         // Encontra o comprimento da string até o caractere de nova linha
                                         int len = strcspn(str, "\n");
-                                        len--;
-                                        // Imprime apenas a parte da string até o caractere de nova linha
+                                        len--; // Remove a vírgula
                                         fprintf(Final, "%.*s,", len, str);
                                 }
                                 else
@@ -272,13 +273,11 @@ int main()
                                         break;
                                 }
 
-                                // Lê uma linha do arquivo de valor correspondente
                                 if (leLinha(Valor[i * 2 + j], &str))
                                 {
                                         // Encontra o comprimento da string até o caractere de nova linha
                                         int len = strcspn(str, "\n");
-                                        len--;
-                                        // Imprime apenas a parte da string até o caractere de nova linha
+                                        len--; // Remove a vírgula
                                         fprintf(Final, "%.*s", len, str);
                                 }
                                 else
@@ -286,20 +285,18 @@ int main()
                                         break;
                                 }
 
-                                // Imprime uma vírgula entre as colunas, exceto na última coluna da linha
                                 if (j != 1)
                                 {
                                         fprintf(Final, ",");
                                 }
                         }
 
-                        // Imprime uma vírgula entre as classes, exceto na última classe
                         if (i != 2)
                         {
                                 fprintf(Final, ",");
                         }
                 }
-                BarraDeProgresso(k,NUMERO_DE_CASOS);
+                BarraDeProgresso(k, NUMERO_DE_CASOS);
                 fprintf(Final, "\n");
         }
         printf("\n");

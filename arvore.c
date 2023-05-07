@@ -29,11 +29,11 @@ int ComparaTamanho(const void *a, const void *b)
 
     if (elem1->Tamanho > elem2->Tamanho)
     {
-        return -1;
+        return 1;
     }
     else if (elem1->Tamanho < elem2->Tamanho)
     {
-        return 1;
+        return -1;
     }
     else
     {
