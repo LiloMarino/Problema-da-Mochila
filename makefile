@@ -2,7 +2,7 @@
 PROJETO = mochila
 
 # Arquivos fonte
-FONTES = main.c arvore.c Bibliotecas/learquivo.c Bibliotecas/efficiency.c Bibliotecas/geradores.c
+FONTES = main.c arvore.c Bibliotecas/learquivo.c Bibliotecas/efficiency.c Bibliotecas/geradores.c Bibliotecas/utilities.c
 
 # Pasta de saída
 OUTPUT = output/

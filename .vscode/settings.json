@@ -8,6 +8,7 @@
         }
     ],
     "files.associations": {
+        "*.c": "c",
         "config.h": "c",
         "cmath": "c",
         "geradores.h": "c",
@@ -21,6 +22,7 @@
         "learquivo.h": "c",
         "locale.h": "c",
         "clocale": "c",
-        "arvore.h": "c"
+        "arvore.h": "c",
+        "utilities.h": "c"
     }
 }

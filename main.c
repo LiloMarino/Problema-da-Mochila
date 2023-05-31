@@ -24,6 +24,7 @@ const char classe[] = "Classe Custom";
 #include "arvore.h"
 #include "Bibliotecas/efficiency.h"
 #include "Bibliotecas/geradores.h"
+#include "Bibliotecas/utilities.h"
 int main()
 {
         setlocale(LC_ALL, "pt_BR.utf8"); // Necessário para a leitura correta no excel ou no sheets
@@ -42,6 +43,7 @@ int main()
         fprintf(log, "BranchBound,MOPT,MOP,MOT,Gulosa,\n");
 #endif
         /*Inicia os testes*/
+        time_t inicio = time(NULL);
         for (int i = 1; i <= NUMERO_DE_CASOS; i++)
         {
 #if UNICO_REGISTRO_POR_MOCHILA == 1
@@ -146,7 +148,7 @@ int main()
 #endif
 #if SHOW_ON_TERMINAL == 0
                 /*Mostra uma barra de progresso que avança conforme os casos vão sendo analisados*/
-                BarraDeProgresso(i, NUMERO_DE_CASOS);
+                BarraDeProgressoETA(i, NUMERO_DE_CASOS,inicio);
 #endif
                 /*Altera para a leitura para o próximo arquivo*/
                 sprintf(nome_arquivo, "dados-%d.txt", i + 1);
@@ -182,6 +184,7 @@ int main()
 #include <stdlib.h>
 #include "Bibliotecas/geradores.h"
 #include "Bibliotecas/learquivo.h"
+#include "Bibliotecas/utilities.h"
 int main()
 {
         /*Compila os valores dos registros em um único arquivo e deleta todos os registros gerais*/
@@ -202,6 +205,7 @@ int main()
 #elif METHOD_USE == 6
         fprintf(compilado, "BranchBound,MOPT,MOP,MOT,Gulosa,\n");
 #endif
+        time_t inicio = time(NULL);
         for (int i = 1; registro != NULL; i++)
         {
                 /*Atribuição dos Valores*/
@@ -224,7 +228,7 @@ int main()
                 sprintf(nome_dados, "dados-%d.txt", i + 1);
 #endif
                 registro = abreArquivoCmd(nome_arquivo);
-                BarraDeProgresso(i, NUMERO_DE_CASOS);
+                BarraDeProgressoETA(i, NUMERO_DE_CASOS,inicio);
         }
         printf("\n");
         fclose(compilado);
@@ -234,6 +238,7 @@ int main()
 #include <string.h>
 #include "Bibliotecas/geradores.h"
 #include "Bibliotecas/learquivo.h"
+#include "Bibliotecas/utilities.h"
 int main()
 {
         setlocale(LC_ALL, "pt_BR.utf8"); // Necessário para a leitura correta no excel ou no sheets
@@ -261,6 +266,7 @@ int main()
         }
         char *str = NULL;
 
+        time_t inicio = time(NULL);
         for (int k = 0; k < NUMERO_DE_CASOS + 1; k++)
         {
                 for (int i = 0; i < 3; i++)
@@ -302,7 +308,7 @@ int main()
                                 fprintf(Final, ",");
                         }
                 }
-                BarraDeProgresso(k, NUMERO_DE_CASOS);
+                BarraDeProgressoETA(k, NUMERO_DE_CASOS,inicio);
                 fprintf(Final, "\n");
         }
         printf("\n");

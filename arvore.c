@@ -385,8 +385,7 @@ bool VerificaRamificacao(const Elemento Itens[], const int Quantidades[], const 
     else
     {
         /*Compara com a solução ótima*/
-        int OtimaSolucao = CalculaSolucao(Itens, Quantidades);
-        if (Limitante > OtimaSolucao)
+        if (Limitante > *MSolucao)
         {
 #if SHOW_LIMITANT == 1 && SHOW_ON_TERMINAL == 1
             printf("%d > %d \n", Limitante, OtimaSolucao);
