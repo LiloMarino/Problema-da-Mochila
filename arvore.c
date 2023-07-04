@@ -21,7 +21,6 @@ void PrintVetorInt(const int vetor_int[], const int ni, FILE *registro)
     fprintf(registro, "\n");
 }
 
-/*Função usada para o qsort ordenar o vetor de Elementos conforme o Tamanho*/
 int ComparaTamanho(const void *a, const void *b)
 {
     const Elemento *elem1 = (const Elemento *)a;
@@ -41,7 +40,6 @@ int ComparaTamanho(const void *a, const void *b)
     }
 }
 
-/*Função usada para o qsort ordenar o vetor de Elementos conforme o Prioridade*/
 int ComparaPrioridade(const void *a, const void *b)
 {
     const Elemento *elem1 = (const Elemento *)a;
@@ -61,7 +59,6 @@ int ComparaPrioridade(const void *a, const void *b)
     }
 }
 
-/*Função usada para o qsort ordenar o vetor de Elementos conforme o Fator*/
 int ComparaFator(const void *a, const void *b)
 {
     const Elemento *elem1 = (const Elemento *)a;
@@ -142,7 +139,6 @@ void HeuristicaMOPT(const Elemento Itens[], int Quantidades[], FILE *registro)
 
 void HeuristicaMOP(Elemento Itens[], int Quantidades[], FILE *registro)
 {
-    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaPrioridade);
     int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
     int MSolucao = 0;
     PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);
@@ -159,7 +155,6 @@ void HeuristicaMOP(Elemento Itens[], int Quantidades[], FILE *registro)
 
 void HeuristicaMOT(Elemento Itens[], int Quantidades[], FILE *registro)
 {
-    qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaTamanho);
     int MelhorSolucao[NUMERO_DE_ITEMS] = {0};
     int MSolucao = 0;
     PrimeiroRamo(Itens, Quantidades, MelhorSolucao, &MSolucao, registro);

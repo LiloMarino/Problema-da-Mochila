@@ -21,6 +21,7 @@ const char classe[] = "Classe Custom";
 #if MODO == 1
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "arvore.h"
 #include "Bibliotecas/efficiency.h"
 #include "Bibliotecas/geradores.h"
@@ -99,6 +100,7 @@ int main()
 #else
                 fprintf(registro, "METODO HEURISTICA MOP:\n");
 #endif
+                qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaPrioridade);
                 iniciarTempo();
                 HeuristicaMOP(Itens, Quantidades, registro);
                 segundos = finalizarTempo();
@@ -118,6 +120,7 @@ int main()
 #else
                 fprintf(registro, "METODO HEURISTICA MOT:\n");
 #endif
+                qsort(Itens, NUMERO_DE_ITEMS, sizeof(Elemento), ComparaTamanho);
                 iniciarTempo();
                 HeuristicaMOT(Itens, Quantidades, registro);
                 segundos = finalizarTempo();

@@ -136,4 +136,13 @@ int CalculaLimitante(const Elemento Itens[], const int Quantidades[], const int 
  */
 bool VerificaRamificacao(const Elemento Itens[], const int Quantidades[], const int k, const int *MSolucao, bool Podado[]);
 
+/*Função usada para o qsort ordenar o vetor de Elementos conforme o Tamanho*/
+int ComparaPrioridade(const void *a, const void *b);
+
+/*Função usada para o qsort ordenar o vetor de Elementos conforme o Prioridade*/
+int ComparaTamanho(const void *a, const void *b);
+
+/*Função usada para o qsort ordenar o vetor de Elementos conforme o Fator*/
+int ComparaFator(const void *a, const void *b);
+
 #endif
